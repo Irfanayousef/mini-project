@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">My Property</h2>
+
+    {% if properties %}
+
+        {% for property in properties %}
+
+        <div class="card mb-3 shadow-sm">
+
+            <div class="card-body">
+
+                <h4>
+                    {{ property.property_id }}
+                </h4>
+
+                <p>
+                    <strong>Owner:</strong>
+                    {{ property.owner_name }}
+                </p>
+
+                <p>
+                    <strong>Property Type:</strong>
+                    {{ property.get_property_type_display }}
+                </p>
+
+                <p>
+                    <strong>Address:</strong>
+                    {{ property.address }}
+                </p>
+
+                <p>
+                    <strong>Phone:</strong>
+                    {{ property.phone }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="alert alert-info">
+            No Property Registered
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

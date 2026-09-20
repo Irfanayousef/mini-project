@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoPulse | Smart Sanitation & Food Redistribution Platform</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- FontAwesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --eco-dark-green: #112A12;
+      --eco-primary: #1E5128;
+      --eco-medium-green: #4E9F3D;
+      --eco-accent: #D8E9A8;
+      --eco-light-bg: #F8FAF7;
+      --eco-card-border: rgba(78, 159, 61, 0.15);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--eco-light-bg);
+      color: #2D3748;
+    }
+
+    /* Modern Navbar */
+    .navbar-custom {
+      background: rgba(17, 42, 18, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(216, 233, 168, 0.1);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: radial-gradient(circle at 10% 20%, rgba(30, 81, 40, 0.95) 0%, rgba(17, 42, 18, 0.98) 100%), 
+                  url('https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&q=80') center/cover;
+      position: relative;
+      padding: 100px 0 120px;
+    }
+
+    /* Floating Glassmorphic Cards */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+    }
+
+    .feature-card {
+      background: #FFFFFF;
+      border: 1px solid var(--eco-card-border);
+      border-radius: 16px;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(30, 81, 40, 0.08);
+      border-color: var(--eco-medium-green);
+    }
+
+    /* Badge & Icon Styling */
+    .icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .btn-eco-accent {
+      background-color: var(--eco-accent);
+      color: var(--eco-dark-green);
+      font-weight: 700;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-eco-accent:hover {
+      background-color: #c2db8b;
+      color: var(--eco-dark-green);
+      transform: translateY(-2px);
+    }
+
+    .btn-eco-primary {
+      background-color: var(--eco-medium-green);
+      color: #FFFFFF;
+      font-weight: 600;
+      border: none;
+    }
+
+    .btn-eco-primary:hover {
+      background-color: var(--eco-primary);
+      color: #FFFFFF;
+    }
+
+    /* Waste Category Pills */
+    .category-pill {
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-weight: 600;
+    }
+
+    .pill-bio { background: #E8F5E9; color: #2E7D32; }
+    .pill-plastic { background: #E3F2FD; color: #1565C0; }
+    .pill-ewaste { background: #FFF3E0; color: #E65100; }
+    .pill-hazard { background: #FFEBEE; color: #C62828; }
+
+    /* Live Badge Pulse Effect */
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      background-color: #00E676;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 rgba(0, 230, 118, 0.7);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 230, 118, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Modern Sticky Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+        <svg class="me-2" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D8E9A8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.4 19 2c1 2 2 4.12 2 7 0 5.5-4.5 10-10 10z"></path>
+          <path d="M12 21a9 9 0 0 0 9-9H1a9 9 0 0 0 9 9z"></path>
+        </svg>
+        <span class="fw-bold fs-3 text-white">Eco<span style="color: var(--eco-accent);">Pulse</span></span>
+      </a>
+      
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link active fw-medium" href="{% url 'home' %}">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50 fw-medium" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50 fw-medium" href="#food-bridge">Food Bridge</a></li>
+          <li class="nav-item"><a class="nav-link text-white-50 fw-medium" href="#categories">Waste Categories</a></li>
+          <li class="nav-item ms-lg-3">
+            <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm px-3 rounded-pill fw-semibold">Login</a>
+          </li>
+          <li class="nav-item ms-lg-1">
+            <a href="{% url 'register' %}" class="btn btn-eco-accent btn-sm px-4 rounded-pill">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 2. Dynamic Hero Section -->
+  <section class="hero-section text-white">
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        
+        <div class="col-lg-7">
+          <div class="d-inline-flex align-items-center gap-2 bg-white bg-opacity-10 border border-white border-opacity-20 px-3 py-1.5 rounded-pill mb-4">
+            <span class="pulse-dot"></span>
+            <span class="small text-light fw-medium">Smart Sanitation & Zero-Waste Initiative</span>
+          </div>
+          
+          <h1 class="display-3 fw-extrabold mb-3 lh-sm">
+            Digitizing Waste Tracking. <br>
+            <span style="color: var(--eco-accent);">Redistributing Food.</span>
+          </h1>
+          
+          <p class="lead text-white-50 mb-4 pe-lg-4">
+            Transforming municipal waste collection with <strong>Property QR verification</strong>, geotagged <strong>black spot reporting</strong>, and real-time <strong>surplus food bridge</strong> for NGOs.
+          </p>
+          
+          <div class="d-flex flex-wrap gap-3">
+            <a href="{% url 'register' %}" class="btn btn-eco-accent btn-lg px-4 py-3 rounded-3 shadow">
+              <i class="fa-solid fa-user-plus me-2"></i>Register Your Property
+            </a>
+            <a href="#food-bridge" class="btn btn-outline-light btn-lg px-4 py-3 rounded-3">
+              <i class="fa-solid fa-hand-holding-heart me-2"></i>Donate Food
+            </a>
+          </div>
+
+          <!-- Quick Metrics Bar -->
+          <div class="row mt-5 pt-4 border-top border-white border-opacity-10 text-center text-sm-start">
+            <div class="col-4">
+              <h3 class="fw-bold mb-0 text-white">100%</h3>
+              <small class="text-white-50">QR Verified Pickups</small>
+            </div>
+            <div class="col-4">
+              <h3 class="fw-bold mb-0 text-white">8+</h3>
+              <small class="text-white-50">Waste Streams Tracked</small>
+            </div>
+            <div class="col-4">
+              <h3 class="fw-bold mb-0 text-white">Zero</h3>
+              <small class="text-white-50">Edible Food Waste Goal</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Interactive Dynamic Card Mockup -->
+        <div class="col-lg-5">
+          <div class="glass-card p-4 text-white shadow-lg">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-30 rounded-pill px-3 py-2">
+                <i class="fa-solid fa-shield-halved me-1"></i> Verification Live
+              </span>
+              <small class="text-white-50">Property ID: #PR-88392</small>
+            </div>
+
+            <!-- Visual QR Mockup -->
+            <div class="bg-white p-3 rounded-4 text-center text-dark mb-3">
+              <div class="p-3 border border-2 border-dash rounded-3 bg-light d-inline-block">
+                <i class="fa-solid fa-qrcode fa-5x text-eco-primary"></i>
+              </div>
+              <h6 class="fw-bold mt-2 mb-0">Doorstep Verification Tag</h6>
+              <p class="text-muted small mb-0">Scanned by assigned sanitation personnel</p>
+            </div>
+
+            <div class="bg-white bg-opacity-10 p-3 rounded-3">
+              <div class="d-flex justify-content-between text-white-50 small mb-1">
+                <span>Last Pickup Status</span>
+                <span class="text-white fw-bold">Completed Today</span>
+              </div>
+              <div class="progress" style="height: 6px;">
+                <div class="progress-bar bg-success" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Key Core Modules Showcase -->
+  <section class="py-5" id="features">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="text-success fw-bold text-uppercase small tracking-wider">System Capabilities</span>
+        <h2 class="fw-bold mt-2">Comprehensive Smart Waste Infrastructure</h2>
+        <p class="text-muted">Designed to connect citizens, municipal workers, local businesses, and charitable bodies in one unified ecosystem.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Feature 1: QR Verification -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+              <div class="icon-box bg-success bg-opacity-10 text-success mb-4">
+                <i class="fa-solid fa-qrcode"></i>
+              </div>
+              <h5 class="fw-bold">QR Doorstep Collection</h5>
+              <p class="text-muted small">Sanitation workers scan assigned household or commercial QR codes to record pickup logs, timestamps, and waste types instantly.</p>
+            </div>
+            <span class="text-success fw-semibold small">For Workers & Citizens &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Feature 2: Food Redistribution -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+              <div class="icon-box bg-warning bg-opacity-10 text-warning mb-4">
+                <i class="fa-solid fa-utensils"></i>
+              </div>
+              <h5 class="fw-bold">Community Food Bridge</h5>
+              <p class="text-muted small">Hotels and catering services list surplus edible meals. Verified NGOs receive instant notifications and request pickups with active decay timers.</p>
+            </div>
+            <span class="text-warning fw-semibold small">For Hotels & NGOs &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Feature 3: Geo Illegal Dumping Report -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+              <div class="icon-box bg-danger bg-opacity-10 text-danger mb-4">
+                <i class="fa-solid fa-camera-retro"></i>
+              </div>
+              <h5 class="fw-bold">Geo-Dumping Reports</h5>
+              <p class="text-muted small">Citizens snap photos of roadside black spots and illegal dumping. GPS locations are routed straight to municipal clearing teams.</p>
+            </div>
+            <span class="text-danger fw-semibold small">For Active Citizens &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Feature 4: Bulk Waste Request -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+              <div class="icon-box bg-info bg-opacity-10 text-info mb-4">
+                <i class="fa-solid fa-truck-ramp-box"></i>
+              </div>
+              <h5 class="fw-bold">Bulk Pickup Dispatch</h5>
+              <p class="text-muted small">Easily schedule on-demand pickup requests for large events, construction waste, or heavy household discard items.</p>
+            </div>
+            <span class="text-info fw-semibold small">On-Demand Schedule &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Feature 5: Digital Waste History -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+              <div class="icon-box bg-primary bg-opacity-10 text-primary mb-4">
+                <i class="fa-solid fa-chart-column"></i>
+              </div>
+              <h5 class="fw-bold">Property Segregation Analytics</h5>
+              <p class="text-muted small">View historical data on your property's waste output across various streams to track your personal eco-footprint over time.</p>
+            </div>
+            <span class="text-primary fw-semibold small">Digital Dashboard &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Feature 6: Municipal Command Dashboard -->
+        <div class="col-md-6 col-lg-4">
+          <div class="feature-card h-100 p-4 d-flex flex-column justify-content-between">
+            <div>
+              <div class="icon-box bg-secondary bg-opacity-10 text-dark mb-4">
+                <i class="fa-solid fa-sliders"></i>
+              </div>
+              <h5 class="fw-bold">Admin Operations Hub</h5>
+              <p class="text-muted small">Central administrative control panel for managing user accounts, reviewing reports, approving food listings, and route scheduling.</p>
+            </div>
+            <span class="text-secondary fw-semibold small">For System Admins &rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Real-time Surplus Food Bridge Section -->
+  <section class="py-5 bg-white border-top border-bottom" id="food-bridge">
+    <div class="container py-4">
+      <div class="row align-items-center gy-4">
+        
+        <div class="col-lg-5">
+          <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold">
+            <i class="fa-solid fa-bowl-food me-1"></i> Live Redistribution Feed
+          </span>
+          <h2 class="fw-bold mb-3">Save Excess Food. <br>Feed Local Communities.</h2>
+          <p class="text-muted mb-4">
+            Instead of usable food reaching landfills, our platform connects commercial kitchens with nearby registered non-profits, orphanages, and community shelters.
+          </p>
+
+          <div class="d-flex gap-3">
+            <a href="{% url 'register' %}" class="btn btn-eco-primary px-4 py-2.5 rounded-3">Register as Food Donor</a>
+            <a href="{% url 'register' %}" class="btn btn-outline-secondary px-4 py-2.5 rounded-3">Claim as NGO</a>
+          </div>
+        </div>
+
+        <!-- Active Food Offer Cards Showcase -->
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-light p-3">
+            <div class="d-flex justify-content-between align-items-center px-2 mb-3">
+              <h6 class="fw-bold mb-0 text-muted"><i class="fa-solid fa-clock-rotate-left me-1"></i> Recent Food Listings</h6>
+              <span class="badge bg-success">Active Listings</span>
+            </div>
+
+            <!-- Offer Item 1 -->
+            <div class="card border-0 shadow-sm mb-3 rounded-3">
+              <div class="card-body p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                  <h6 class="fw-bold mb-1">Grand Palace Hotel & Banquets</h6>
+                  <p class="text-muted small mb-0"><i class="fa-solid fa-utensils me-1 text-warning"></i> Prepared Rice & Curry Meals (~50 Portions)</p>
+                  <small class="text-danger fw-semibold"><i class="fa-solid fa-hourglass-half me-1"></i> Expires in 3h 20m</small>
+                </div>
+                <a href="{% url 'login' %}" class="btn btn-sm btn-outline-success rounded-pill px-3">Claim Donation</a>
+              </div>
+            </div>
+
+            <!-- Offer Item 2 -->
+            <div class="card border-0 shadow-sm rounded-3">
+              <div class="card-body p-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div>
+                  <h6 class="fw-bold mb-1">GreenBite Organic Catering</h6>
+                  <p class="text-muted small mb-0"><i class="fa-solid fa-bread-slice me-1 text-warning"></i> Assorted Baked Breads & Snacks (~30 Packs)</p>
+                  <small class="text-danger fw-semibold"><i class="fa-solid fa-hourglass-half me-1"></i> Expires in 5h 45m</small>
+                </div>
+                <a href="{% url 'login' %}" class="btn btn-sm btn-outline-success rounded-pill px-3">Claim Donation</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Interactive Waste Categorization Breakdown -->
+  <section class="py-5" id="categories">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <h2 class="fw-bold">Segregation Made Simple</h2>
+        <p class="text-muted">To keep collection seamless, our platform categorizes collected waste into specific streams during doorstep verification.</p>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="p-3 bg-white rounded-3 border text-center h-100">
+            <div class="mb-2"><i class="fa-solid fa-leaf text-success fa-2x"></i></div>
+            <h6 class="fw-bold mb-1">Biodegradable</h6>
+            <span class="category-pill pill-bio d-inline-block mt-2">Food & Organic Discard</span>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="p-3 bg-white rounded-3 border text-center h-100">
+            <div class="mb-2"><i class="fa-solid fa-bottle-water text-primary fa-2x"></i></div>
+            <h6 class="fw-bold mb-1">Plastics & Synthetics</h6>
+            <span class="category-pill pill-plastic d-inline-block mt-2">Recyclable Polymers</span>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="p-3 bg-white rounded-3 border text-center h-100">
+            <div class="mb-2"><i class="fa-solid fa-plug text-warning fa-2x"></i></div>
+            <h6 class="fw-bold mb-1">E-Waste & Appliances</h6>
+            <span class="category-pill pill-ewaste d-inline-block mt-2">Electronics & Wiring</span>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="p-3 bg-white rounded-3 border text-center h-100">
+            <div class="mb-2"><i class="fa-solid fa-triangle-exclamation text-danger fa-2x"></i></div>
+            <h6 class="fw-bold mb-1">Hazardous & Medical</h6>
+            <span class="category-pill pill-hazard d-inline-block mt-2">Special Disposal Needed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Footers -->
+  <footer class="bg-dark text-white pt-5 pb-4 border-top border-success">
+    <div class="container">
+      <div class="row gy-4 mb-4">
+        <div class="col-lg-5">
+          <div class="d-flex align-items-center mb-3">
+            <svg class="me-2" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D8E9A8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.4 19 2c1 2 2 4.12 2 7 0 5.5-4.5 10-10 10z"></path>
+              <path d="M12 21a9 9 0 0 0 9-9H1a9 9 0 0 0 9 9z"></path>
+            </svg>
+            <span class="fw-bold fs-4 text-white">Eco<span style="color: var(--eco-accent);">Pulse</span></span>
+          </div>
+          <p class="text-white-50 small pe-lg-5">
+            Empowering communities through modern digital waste tracking, accurate doorstep QR verification, transparent municipal reports, and instant zero-waste food bridge networks.
+          </p>
+        </div>
+
+        <div class="col-6 col-lg-3">
+          <h6 class="fw-bold text-white mb-3">Quick Navigation</h6>
+          <ul class="list-unstyled small text-white-50 mb-0">
+            <li class="mb-2"><a href="{% url 'home' %}" class="text-white-50 text-decoration-none">Home</a></li>
+            <li class="mb-2"><a href="#features" class="text-white-50 text-decoration-none">System Features</a></li>
+            <li class="mb-2"><a href="#food-bridge" class="text-white-50 text-decoration-none">Food Redistribution Bridge</a></li>
+            <li class="mb-2"><a href="{% url 'login' %}" class="text-white-50 text-decoration-none">Portal Login</a></li>
+          </ul>
+        </div>
+
+        <div class="col-6 col-lg-4">
+          <h6 class="fw-bold text-white mb-3">Municipal & Support Contact</h6>
+          <p class="text-white-50 small mb-1"><i class="fa-solid fa-envelope me-2 text-success"></i> support@ecopulse.gov.in</p>
+          <p class="text-white-50 small mb-0"><i class="fa-solid fa-phone me-2 text-success"></i> Municipal Helpline: 1800-ECO-PULSE</p>
+        </div>
+      </div>
+
+      <hr class="border-secondary my-4">
+
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small text-white-50">
+        <p class="mb-0">&copy; 2026 EcoPulse Sanitation & Food System. All rights reserved[cite: 1].</p>
+        <div class="mt-2 mt-md-0">
+          <a href="#" class="text-white-50 text-decoration-none me-3">Privacy Policy</a>
+          <a href="#" class="text-white-50 text-decoration-none">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
