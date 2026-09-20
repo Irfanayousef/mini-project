@@ -1,23 +1,25 @@
-"""
-URL configuration for smartwaste project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("", include("wasteapp.urls")),
+    path('', views.home, name='home'),
+
+    path('login/', views.login, name='login'),
+    path('register/', views.register, name='register'),
+    path('logout/', views.logout_view, name='logout'),
+
+    path('dashboard/citizen/', views.citizen_dashboard, name='citizen_dashboard'),
+    path('dashboard/worker/', views.worker_dashboard, name='worker_dashboard'),
+    path('dashboard/admin/', views.admin_dashboard, name='admin_dashboard'),
+
+    # Property URLs
+    path('add-property/', views.add_property, name='add_property'),
+    path('my-property/', views.my_property, name='my_property'),
+    path('property-list/', views.property_list, name='property_list'),
+
+    path('waste-collection/',views.waste_collection,name='waste_collection'),
+    path('bulk-pickup/',views.bulk_pickup,name='bulk_pickup'),
+    path('report-dumping/',views.report_dumping,name='report_dumping'),
+
+    path('food-redistribution/',views.food_redistribution,name='food_redistribution'),
 ]
