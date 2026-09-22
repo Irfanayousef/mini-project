@@ -1,0 +1,1665 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Sanitation Worker Dashboard | Smart Waste</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7f5;
+            color: #263238;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: #12372a;
+            color: white;
+            padding: 25px 18px;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 5px 10px 30px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+            background: #2e7d32;
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .brand h4 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .brand small {
+            color: #b8d5c0;
+            font-size: 10px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            color: #9ab7a4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            padding: 10px 12px;
+            margin-top: 10px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #d8e8dc;
+
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+            margin-bottom: 5px;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        .sidebar a i {
+            font-size: 17px;
+            width: 22px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .logout {
+            position: absolute;
+
+            bottom: 20px;
+            left: 18px;
+            right: 18px;
+        }
+
+        .logout a {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 75px;
+
+            background: white;
+
+            border-bottom: 1px solid #e4e9e6;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+        }
+
+        .page-title h5 {
+            margin: 0;
+            font-weight: 600;
+            color: #183b2a;
+        }
+
+        .page-title small {
+            color: #7b8b82;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            background: #eef6ef;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #2e7d32;
+
+            position: relative;
+        }
+
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+
+            background: #ef4444;
+
+            border-radius: 50%;
+
+            position: absolute;
+
+            top: 7px;
+            right: 7px;
+        }
+
+        .worker-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .worker-avatar {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            background: #2e7d32;
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 600;
+        }
+
+        .worker-profile strong {
+            font-size: 13px;
+            display: block;
+        }
+
+        .worker-profile small {
+            color: #7b8b82;
+            font-size: 11px;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px 35px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(18,55,42,0.97) 0%,
+                    rgba(18,55,42,0.88) 48%,
+                    rgba(18,55,42,0.35) 100%
+                ),
+                url("https://www.aracaju.se.gov.br/thumb/phpThumb.php?src=%2Fuserfiles%2Fnoticia_imagens%2F202405%2F105846%2Ffoto_ascom_emsurb.jpeg&w=1024");
+
+            background-size: cover;
+            background-position: center;
+
+            min-height: 245px;
+
+            border-radius: 20px;
+
+            padding: 35px;
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+
+            background: rgba(255,255,255,0.15);
+
+            border: 1px solid rgba(255,255,255,0.25);
+
+            padding: 6px 13px;
+
+            border-radius: 30px;
+
+            font-size: 11px;
+
+            margin-bottom: 14px;
+        }
+
+        .hero h1 {
+            font-size: 29px;
+            font-weight: 600;
+
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 13px;
+
+            color: #dcebe1;
+
+            line-height: 1.7;
+
+            margin-bottom: 20px;
+        }
+
+        .hero-btn {
+            background: white;
+
+            color: #1b5e20;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            display: inline-flex;
+            align-items: center;
+
+            gap: 7px;
+
+            transition: 0.2s;
+        }
+
+        .hero-btn:hover {
+            background: #e8f5e9;
+            color: #12372a;
+        }
+
+        /* ================= STAT CARDS ================= */
+
+        .stat-card {
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 21px;
+
+            border: 1px solid #e6ece8;
+
+            height: 100%;
+
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 25px rgba(18,55,42,0.08);
+        }
+
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
+            margin-bottom: 15px;
+        }
+
+        .green-icon {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .orange-icon {
+            background: #fff4df;
+            color: #d97706;
+        }
+
+        .blue-icon {
+            background: #e8f1ff;
+            color: #2563eb;
+        }
+
+        .red-icon {
+            background: #feecec;
+            color: #dc2626;
+        }
+
+        .stat-card small {
+            color: #819088;
+            font-size: 11px;
+        }
+
+        .stat-card h3 {
+            margin: 5px 0 0;
+
+            font-size: 26px;
+
+            font-weight: 600;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin: 30px 0 15px;
+        }
+
+        .section-title h5 {
+            margin: 0;
+
+            font-weight: 600;
+
+            color: #183b2a;
+        }
+
+        .section-title a {
+            font-size: 12px;
+
+            color: #2e7d32;
+
+            text-decoration: none;
+        }
+
+        .section-title a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= QUICK ACTIONS ================= */
+
+        .action-card {
+            background: white;
+
+            border: 1px solid #e6ece8;
+
+            border-radius: 15px;
+
+            padding: 20px;
+
+            text-decoration: none;
+
+            color: #263238;
+
+            display: block;
+
+            height: 100%;
+
+            transition: 0.2s;
+        }
+
+        .action-card:hover {
+            border-color: #2e7d32;
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px rgba(18,55,42,0.08);
+
+            color: #263238;
+        }
+
+        .action-icon {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 11px;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
+            margin-bottom: 14px;
+        }
+
+        .action-card h6 {
+            font-weight: 600;
+
+            margin-bottom: 5px;
+        }
+
+        .action-card p {
+            font-size: 11px;
+
+            color: #7b8b82;
+
+            margin: 0;
+
+            line-height: 1.6;
+        }
+
+        /* ================= COLLECTION TABLE ================= */
+
+        .table-card {
+            background: white;
+
+            border-radius: 16px;
+
+            border: 1px solid #e6ece8;
+
+            overflow: hidden;
+        }
+
+        .table {
+            margin: 0;
+        }
+
+        .table thead th {
+            background: #f7faf8;
+
+            border-bottom: 1px solid #e4ebe6;
+
+            color: #64746b;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            padding: 14px 18px;
+        }
+
+        .table tbody td {
+            padding: 15px 18px;
+
+            vertical-align: middle;
+
+            font-size: 12px;
+
+            border-color: #eef2ef;
+        }
+
+        .property-id {
+            font-weight: 600;
+
+            color: #1b5e20;
+        }
+
+        .status {
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-pending {
+            background: #fff4df;
+            color: #b45309;
+        }
+
+        .status-progress {
+            background: #e8f1ff;
+            color: #2563eb;
+        }
+
+        .view-btn {
+            border: 1px solid #dce6df;
+
+            background: white;
+
+            color: #2e7d32;
+
+            padding: 5px 10px;
+
+            border-radius: 7px;
+
+            font-size: 10px;
+
+            text-decoration: none;
+
+            display: inline-block;
+        }
+
+        .view-btn:hover {
+            background: #e8f5e9;
+
+            color: #1b5e20;
+        }
+
+        /* ================= WORK UPDATE ================= */
+
+        .update-card {
+            background: #12372a;
+
+            color: white;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            height: 100%;
+        }
+
+        .update-card h5 {
+            font-size: 17px;
+
+            margin-bottom: 8px;
+        }
+
+        .update-card p {
+            color: #c9ddd0;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+        .update-btn {
+            background: #4caf50;
+
+            border: none;
+
+            color: white;
+
+            padding: 9px 16px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+
+            display: inline-block;
+        }
+
+        .update-btn:hover {
+            background: #66bb6a;
+
+            color: white;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 992px) {
+
+            .sidebar {
+                width: 80px;
+
+                padding: 20px 10px;
+            }
+
+            .brand h4,
+            .brand small,
+            .menu-title,
+            .sidebar a span {
+                display: none;
+            }
+
+            .brand {
+                justify-content: center;
+
+                padding-bottom: 25px;
+            }
+
+            .sidebar a {
+                justify-content: center;
+
+                padding: 13px;
+            }
+
+            .logout {
+                left: 10px;
+                right: 10px;
+            }
+
+            .main {
+                margin-left: 80px;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .content {
+                padding: 20px 18px;
+            }
+
+            .worker-profile div {
+                display: none;
+            }
+
+            .hero {
+                padding: 25px;
+            }
+
+            .hero h1 {
+                font-size: 23px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            <i class="bi bi-recycle"></i>
+        </div>
+
+        <div>
+
+            <h4>SmartWaste</h4>
+
+            <small>
+                RESOURCE MANAGEMENT
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="menu-title">
+        Workspace
+    </div>
+
+
+    <!-- DASHBOARD -->
+
+    <a href="{% url 'worker_dashboard' %}"
+       class="active">
+
+        <i class="bi bi-grid-1x2-fill"></i>
+
+        <span>
+            Dashboard
+        </span>
+
+    </a>
+
+
+    <!-- MY COLLECTION AREAS -->
+
+    <a href="{% url 'my_collection_areas' %}">
+
+        <i class="bi bi-geo-alt-fill"></i>
+
+        <span>
+            My Collection Areas
+        </span>
+
+    </a>
+
+
+    <!-- VERIFY PROPERTY -->
+
+    <a href="{% url 'verify_property' %}">
+
+        <i class="bi bi-qr-code-scan"></i>
+
+        <span>
+            Verify Property
+        </span>
+
+    </a>
+
+
+    <!-- RECORD COLLECTION -->
+
+    <a href="{% url 'verify_property' %}">
+
+        <i class="bi bi-trash3-fill"></i>
+
+        <span>
+            Record Collection
+        </span>
+
+    </a>
+
+
+    <!-- BULK PICKUP -->
+
+    <a href="{% url 'worker_bulk_pickup' %}">
+    <i class="fa-solid fa-box"></i>
+    <span>Bulk Pickup</span>
+   </a>
+
+
+    <!-- COLLECTION HISTORY -->
+
+    <a href="{% url 'collection_history' %}">
+    <i class="fa-solid fa-clock-rotate-left"></i>
+    Collection History
+</a>
+
+
+    <div class="menu-title">
+        Reports
+    </div>
+
+
+    <!-- DAILY WORK UPDATE -->
+
+    <a href="{% url 'daily_work_update' %}">
+    <i class="fa-solid fa-clipboard-check"></i>
+    Daily Work Update
+    </a>
+
+    <!-- NOTIFICATIONS -->
+
+    <a href="{% url 'notifications' %}">
+    <i class="fa-solid fa-bell"></i>
+    Notifications
+    </a>
+
+
+    <!-- LOGOUT -->
+
+   <a href="{% url 'logout' %}">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+    </a>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div class="page-title">
+
+            <h5>
+                Sanitation Worker Dashboard
+            </h5>
+
+            <small>
+                Smart Waste Resource Management System
+            </small>
+
+        </div>
+
+
+        <div class="top-right">
+
+            <div class="notification">
+
+                <i class="bi bi-bell"></i>
+
+                <span class="notification-dot"></span>
+
+            </div>
+
+
+            <div class="worker-profile">
+
+                <div class="worker-avatar">
+
+                    {% if request.user.first_name %}
+
+                        {{ request.user.first_name|first|upper }}
+
+                    {% else %}
+
+                        {{ request.user.username|first|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+
+                        {% if request.user.get_full_name %}
+
+                            {{ request.user.get_full_name }}
+
+                        {% else %}
+
+                            {{ request.user.username }}
+
+                        {% endif %}
+
+                    </strong>
+
+                    <small>
+                        Sanitation Worker
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+
+        <!-- HERO -->
+
+        <div class="hero">
+
+            <div class="hero-content">
+
+                <span class="hero-badge">
+
+                    <i class="bi bi-shield-check"></i>
+
+                    Worker Portal
+
+                </span>
+
+
+                <h1>
+
+                    Good Morning,
+
+                    {% if request.user.first_name %}
+
+                        {{ request.user.first_name }}
+
+                    {% else %}
+
+                        Worker
+
+                    {% endif %}
+
+                    👋
+
+                </h1>
+
+
+                <p>
+
+                    Manage your daily waste collection activities,
+                    verify properties, record segregated waste and
+                    keep your collection records up to date.
+
+                </p>
+
+
+                <a href="{% url 'verify_property' %}"
+                   class="hero-btn">
+
+                    <i class="bi bi-qr-code-scan"></i>
+
+                    Verify Property
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STATISTICS -->
+
+        <div class="row g-3">
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green-icon">
+
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                    </div>
+
+                    <small>
+                        Assigned Properties
+                    </small>
+
+                    <h3>
+                        24
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue-icon">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    </div>
+
+                    <small>
+                        Collected Today
+                    </small>
+
+                    <h3>
+                        18
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange-icon">
+
+                        <i class="bi bi-hourglass-split"></i>
+
+                    </div>
+
+                    <small>
+                        Pending Collection
+                    </small>
+
+                    <h3>
+                        06
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon red-icon">
+
+                        <i class="bi bi-box-seam-fill"></i>
+
+                    </div>
+
+                    <small>
+                        Bulk Pickup Requests
+                    </small>
+
+                    <h3>
+                        03
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="section-title">
+
+            <h5>
+                Quick Actions
+            </h5>
+
+        </div>
+
+
+        <div class="row g-3">
+
+
+            <!-- VERIFY PROPERTY -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <a href="{% url 'verify_property' %}"
+                   class="action-card">
+
+                    <div class="action-icon">
+
+                        <i class="bi bi-qr-code-scan"></i>
+
+                    </div>
+
+                    <h6>
+                        Verify Property
+                    </h6>
+
+                    <p>
+                        Verify a registered property using
+                        Property ID or QR code.
+                    </p>
+
+                </a>
+
+            </div>
+
+
+            <!-- RECORD COLLECTION -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <a href="{% url 'verify_property' %}"
+                   class="action-card">
+
+                    <div class="action-icon">
+
+                        <i class="bi bi-trash3"></i>
+
+                    </div>
+
+                    <h6>
+                        Record Collection
+                    </h6>
+
+                    <p>
+                        Verify a property first, then start
+                        today's waste collection record.
+                    </p>
+
+                </a>
+
+            </div>
+
+
+            <!-- MY COLLECTION AREAS -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <a href="{% url 'my_collection_areas' %}"
+                   class="action-card">
+
+                    <div class="action-icon">
+
+                        <i class="bi bi-geo-alt"></i>
+
+                    </div>
+
+                    <h6>
+                        My Collection Areas
+                    </h6>
+
+                    <p>
+                        View registered properties and check
+                        today's collection status.
+                    </p>
+
+                </a>
+
+            </div>
+
+
+            <!-- DAILY UPDATE -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <a href="#"
+                   class="action-card"
+                   onclick="alert('Daily Work Update module will be connected next.'); return false;">
+
+                    <div class="action-icon">
+
+                        <i class="bi bi-pencil-square"></i>
+
+                    </div>
+
+                    <h6>
+                        Daily Work Update
+                    </h6>
+
+                    <p>
+                        Submit your daily work progress
+                        to the administration.
+                    </p>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TODAY'S COLLECTION -->
+
+        <div class="section-title">
+
+            <h5>
+                Today's Collection
+            </h5>
+
+            <a href="{% url 'my_collection_areas' %}">
+
+                View All
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <div class="table-responsive">
+
+                <table class="table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Property ID
+                            </th>
+
+                            <th>
+                                Property Type
+                            </th>
+
+                            <th>
+                                Waste Category
+                            </th>
+
+                            <th>
+                                Collection Time
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+
+                                <span class="property-id">
+                                    SW-10234
+                                </span>
+
+                            </td>
+
+                            <td>
+                                House
+                            </td>
+
+                            <td>
+                                Organic Waste
+                            </td>
+
+                            <td>
+                                08:30 AM
+                            </td>
+
+                            <td>
+
+                                <span class="status status-completed">
+                                    Collected
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'verify_property' %}?property_id=SW-10234"
+                                   class="view-btn">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+
+                                <span class="property-id">
+                                    SW-10235
+                                </span>
+
+                            </td>
+
+                            <td>
+                                Apartment
+                            </td>
+
+                            <td>
+                                Plastic
+                            </td>
+
+                            <td>
+                                09:15 AM
+                            </td>
+
+                            <td>
+
+                                <span class="status status-pending">
+                                    Pending
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'verify_property' %}?property_id=SW-10235"
+                                   class="view-btn">
+
+                                    Start
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+
+                                <span class="property-id">
+                                    SW-10236
+                                </span>
+
+                            </td>
+
+                            <td>
+                                Restaurant
+                            </td>
+
+                            <td>
+                                Non-Biodegradable
+                            </td>
+
+                            <td>
+                                10:00 AM
+                            </td>
+
+                            <td>
+
+                                <span class="status status-progress">
+                                    In Progress
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'verify_property' %}?property_id=SW-10236"
+                                   class="view-btn">
+
+                                    Update
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+
+                                <span class="property-id">
+                                    SW-10237
+                                </span>
+
+                            </td>
+
+                            <td>
+                                School
+                            </td>
+
+                            <td>
+                                Paper
+                            </td>
+
+                            <td>
+                                11:15 AM
+                            </td>
+
+                            <td>
+
+                                <span class="status status-completed">
+                                    Collected
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                <a href="{% url 'verify_property' %}?property_id=SW-10237"
+                                   class="view-btn">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BOTTOM SECTION -->
+
+        <div class="row g-3 mt-1">
+
+
+            <!-- WASTE CATEGORIES -->
+
+            <div class="col-lg-8">
+
+                <div class="section-title">
+
+                    <h5>
+                        Waste Categories
+                    </h5>
+
+                </div>
+
+
+                <div class="row g-3">
+
+
+                    <div class="col-6 col-md-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon green-icon">
+
+                                <i class="bi bi-leaf-fill"></i>
+
+                            </div>
+
+                            <small>
+                                Organic
+                            </small>
+
+                            <h3>
+                                08
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6 col-md-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon blue-icon">
+
+                                <i class="bi bi-recycle"></i>
+
+                            </div>
+
+                            <small>
+                                Plastic
+                            </small>
+
+                            <h3>
+                                05
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6 col-md-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon orange-icon">
+
+                                <i class="bi bi-file-earmark-text"></i>
+
+                            </div>
+
+                            <small>
+                                Paper
+                            </small>
+
+                            <h3>
+                                03
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-6 col-md-3">
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon red-icon">
+
+                                <i class="bi bi-exclamation-triangle"></i>
+
+                            </div>
+
+                            <small>
+                                Other
+                            </small>
+
+                            <h3>
+                                02
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DAILY UPDATE -->
+
+            <div class="col-lg-4">
+
+                <div class="section-title">
+
+                    <h5>
+                        Daily Update
+                    </h5>
+
+                </div>
+
+
+                <div class="update-card">
+
+                    <h5>
+
+                        <i class="bi bi-clipboard-check"></i>
+
+                        Submit Work Update
+
+                    </h5>
+
+
+                    <p>
+
+                        Complete your daily work report and
+                        submit today's collection progress
+                        to the administrator.
+
+                    </p>
+
+
+                    <a href="#"
+                       class="update-btn"
+                       onclick="alert('Daily Work Update module will be connected next.'); return false;">
+
+                        Submit Update
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>
