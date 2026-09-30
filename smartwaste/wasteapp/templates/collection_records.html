@@ -1,0 +1,425 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #f4f8f5;
+    }
+
+    .page-wrapper {
+        padding: 35px 25px;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #12372a, #1f6f50);
+        color: white;
+        border-radius: 18px;
+        padding: 28px 30px;
+        margin-bottom: 25px;
+    }
+
+    .page-header h2 {
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .page-header p {
+        margin: 0;
+        opacity: 0.85;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 18px;
+        background: rgba(255,255,255,0.15);
+        color: white;
+        text-decoration: none;
+        padding: 9px 17px;
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .back-btn:hover {
+        background: rgba(255,255,255,0.25);
+        color: white;
+    }
+
+    .summary-card {
+        background: white;
+        border-radius: 16px;
+        padding: 22px;
+        margin-bottom: 25px;
+        box-shadow: 0 6px 22px rgba(18, 55, 42, 0.08);
+    }
+
+    .summary-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 13px;
+        background: #e4f4ea;
+        color: #198754;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    .summary-number {
+        font-size: 28px;
+        font-weight: 700;
+        color: #12372a;
+    }
+
+    .summary-label {
+        color: #6c757d;
+        font-size: 14px;
+    }
+
+    .table-card {
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 6px 22px rgba(18, 55, 42, 0.08);
+    }
+
+    .table-header {
+        padding: 20px 24px;
+        border-bottom: 1px solid #e9efeb;
+    }
+
+    .table-header h5 {
+        margin: 0;
+        color: #12372a;
+        font-weight: 700;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 1250px;
+    }
+
+    thead th {
+        background: #12372a;
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 14px 12px;
+        white-space: nowrap;
+    }
+
+    tbody td {
+        padding: 15px 12px;
+        vertical-align: middle;
+        font-size: 13px;
+        color: #495057;
+        border-bottom: 1px solid #edf1ee;
+    }
+
+    tbody tr:hover {
+        background: #f8fbf9;
+    }
+
+    .property-id {
+        font-weight: 700;
+        color: #198754;
+    }
+
+    .worker-name {
+        font-weight: 600;
+        color: #12372a;
+    }
+
+    .date-badge {
+        background: #eef5f1;
+        color: #12372a;
+        padding: 6px 9px;
+        border-radius: 7px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .quantity {
+        font-weight: 600;
+        color: #198754;
+        white-space: nowrap;
+    }
+
+    .notes {
+        max-width: 180px;
+        white-space: normal;
+        line-height: 1.5;
+    }
+
+    .empty-state {
+        padding: 70px 20px;
+        text-align: center;
+    }
+
+    .empty-icon {
+        width: 75px;
+        height: 75px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: #e4f4ea;
+        color: #198754;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+    }
+
+    .empty-state h5 {
+        color: #12372a;
+        font-weight: 700;
+    }
+
+    .empty-state p {
+        color: #6c757d;
+    }
+
+    @media (max-width: 768px) {
+        .page-wrapper {
+            padding: 20px 12px;
+        }
+
+        .page-header {
+            padding: 24px 20px;
+        }
+    }
+</style>
+
+
+<div class="page-wrapper">
+
+    <!-- Page Header -->
+    <div class="page-header">
+
+        <h2>
+            <i class="fa-solid fa-recycle me-2"></i>
+            Waste Collection Records
+        </h2>
+
+        <p>
+            View and monitor recorded waste collections across registered properties.
+        </p>
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="back-btn">
+
+            <i class="fa-solid fa-arrow-left me-2"></i>
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+    <!-- Summary -->
+    <div class="summary-card">
+
+        <div class="d-flex align-items-center gap-3">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-clipboard-list"></i>
+            </div>
+
+            <div>
+
+                <div class="summary-number">
+                    {{ records|length }}
+                </div>
+
+                <div class="summary-label">
+                    Total Collection Records
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Records Table -->
+    <div class="table-card">
+
+        <div class="table-header">
+
+            <h5>
+                <i class="fa-solid fa-clock-rotate-left me-2"></i>
+                Collection History
+            </h5>
+
+        </div>
+
+
+        {% if records %}
+
+        <div class="table-responsive">
+
+            <table class="table mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Worker</th>
+                        <th>Property ID</th>
+                        <th>Collection Date</th>
+                        <th>Biodegradable</th>
+                        <th>Non-Biodegradable</th>
+                        <th>Plastic</th>
+                        <th>Paper</th>
+                        <th>Glass</th>
+                        <th>Metal</th>
+                        <th>Electronic</th>
+                        <th>Hazardous</th>
+                        <th>Notes</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for record in records %}
+
+                    <tr>
+
+                        <td>
+                            <span class="worker-name">
+                                {{ record.worker.get_full_name|default:record.worker.username }}
+                            </span>
+                        </td>
+
+
+                        <td>
+
+                            <span class="property-id">
+                                {{ record.property.property_id }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="date-badge">
+                                <i class="fa-regular fa-calendar me-1"></i>
+                                {{ record.collection_date|date:"d M Y" }}
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            <span class="quantity">
+                                {{ record.biodegradable }} kg
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="quantity">
+                                {{ record.non_biodegradable }} kg
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="quantity">
+                                {{ record.plastic }} kg
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="quantity">
+                                {{ record.paper }} kg
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="quantity">
+                                {{ record.glass }} kg
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="quantity">
+                                {{ record.metal }} kg
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="quantity">
+                                {{ record.electronic }} kg
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="quantity">
+                                {{ record.hazardous }} kg
+                            </span>
+                        </td>
+
+
+                        <td>
+
+                            <div class="notes">
+                                {% if record.notes %}
+                                    {{ record.notes }}
+                                {% else %}
+                                    <span class="text-muted">
+                                        No notes
+                                    </span>
+                                {% endif %}
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                <i class="fa-solid fa-recycle"></i>
+            </div>
+
+            <h5>No Collection Records</h5>
+
+            <p>
+                No waste collection records have been recorded yet.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

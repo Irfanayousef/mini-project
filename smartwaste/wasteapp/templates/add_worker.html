@@ -1,0 +1,447 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+    .worker-page {
+        padding: 30px;
+        background: #f4f7f5;
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .page-header {
+        background: linear-gradient(
+            135deg,
+            #12372a,
+            #1f6f50
+        );
+        color: white;
+        border-radius: 18px;
+        padding: 28px 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(18,55,42,.15);
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    .page-header p {
+        margin: 7px 0 0;
+        font-size: 14px;
+        opacity: .9;
+    }
+
+    .form-card {
+        max-width: 950px;
+        margin: auto;
+        background: white;
+        border-radius: 18px;
+        padding: 28px;
+        box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    }
+
+    .section-title {
+        color: #12372a;
+        font-size: 18px;
+        font-weight: 700;
+        padding-bottom: 12px;
+        margin-bottom: 22px;
+        border-bottom: 1px solid #edf1ee;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-label {
+        display: block;
+        color: #12372a;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .form-control,
+    .form-select {
+        width: 100%;
+        border: 1px solid #dce5df;
+        border-radius: 10px;
+        padding: 11px 13px;
+        font-size: 13px;
+        outline: none;
+        background: white;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 3px rgba(25,135,84,.10);
+    }
+
+    .input-help {
+        display: block;
+        margin-top: 5px;
+        color: #7a8780;
+        font-size: 11px;
+    }
+
+    .info-box {
+        background: #f0f8f3;
+        border-left: 4px solid #198754;
+        border-radius: 9px;
+        padding: 14px 16px;
+        margin-bottom: 25px;
+        color: #456052;
+        font-size: 13px;
+    }
+
+    .button-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .btn-save {
+        border: none;
+        background: #198754;
+        color: white;
+        padding: 11px 22px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-save:hover {
+        background: #157347;
+    }
+
+    .btn-cancel {
+        text-decoration: none;
+        background: #e9ecef;
+        color: #495057;
+        padding: 11px 22px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .btn-cancel:hover {
+        background: #dee2e6;
+        color: #343a40;
+    }
+
+    @media (max-width: 768px) {
+
+        .worker-page {
+            padding: 18px;
+        }
+
+        .page-header {
+            padding: 22px;
+        }
+
+        .page-header h2 {
+            font-size: 21px;
+        }
+
+        .form-card {
+            padding: 20px;
+        }
+
+        .button-row {
+            flex-direction: column;
+        }
+
+    }
+
+</style>
+
+
+<div class="worker-page">
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <h2>
+            <i class="fa-solid fa-user-plus"></i>
+            Add Worker
+        </h2>
+
+        <p>
+            Create a new sanitation worker account and assign
+            their collection area.
+        </p>
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="form-card">
+
+        <div class="section-title">
+
+            <i class="fa-solid fa-user-gear"></i>
+            Worker Information
+
+        </div>
+
+
+        <div class="info-box">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            The Worker ID will also be used as the worker's
+            login username.
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="row">
+
+                <!-- WORKER ID -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Worker ID
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="worker_id"
+                            class="form-control"
+                            placeholder="Example: WORKER003"
+                            required
+                        >
+
+                        <span class="input-help">
+                            Must be unique.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            placeholder="Enter phone number"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- FIRST NAME -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            First Name
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="first_name"
+                            class="form-control"
+                            placeholder="Enter first name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- LAST NAME -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="last_name"
+                            class="form-control"
+                            placeholder="Enter last name"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="Enter email address"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Password
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Enter login password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ASSIGNED AREA -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Assigned Area
+                        </label>
+
+                        <input
+                            type="text"
+                            name="assigned_area"
+                            class="form-control"
+                            placeholder="Example: Ward 12"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="col-md-6">
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Status
+                        </label>
+
+                        <select
+                            name="status"
+                            class="form-select"
+                        >
+
+                            <option value="ACTIVE">
+                                Active
+                            </option>
+
+                            <option value="INACTIVE">
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-row">
+
+                <button
+                    type="submit"
+                    class="btn-save"
+                >
+
+                    <i class="fa-solid fa-user-plus"></i>
+                    Create Worker
+
+                </button>
+
+
+                <a
+                    href="{% url 'worker_management' %}"
+                    class="btn-cancel"
+                >
+
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

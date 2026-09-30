@@ -1,0 +1,582 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+    .fine-page {
+        padding: 30px;
+        background: #f4f7f5;
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .fine-header {
+        background: linear-gradient(135deg, #12372a, #1f6f50);
+        color: white;
+        border-radius: 18px;
+        padding: 28px 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(18, 55, 42, 0.15);
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .header-content h2 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    .header-content p {
+        margin: 7px 0 0;
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    .add-fine-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        background: white;
+        color: #12372a;
+        padding: 11px 18px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: 0.2s ease;
+    }
+
+    .add-fine-btn:hover {
+        background: #e4f4ea;
+        color: #12372a;
+        transform: translateY(-1px);
+    }
+
+    .fine-card {
+        background: white;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .fine-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .fine-card-header h4 {
+        margin: 0;
+        color: #12372a;
+        font-weight: 700;
+    }
+
+    .fine-count {
+        background: #e4f4ea;
+        color: #198754;
+        padding: 7px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .fine-table {
+        width: 100%;
+        min-width: 1100px;
+        border-collapse: collapse;
+    }
+
+    .fine-table thead th {
+        background: #12372a;
+        color: white;
+        padding: 14px 12px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .fine-table thead th:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .fine-table thead th:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    .fine-table tbody td {
+        padding: 15px 12px;
+        border-bottom: 1px solid #edf1ee;
+        font-size: 13px;
+        color: #495057;
+        vertical-align: middle;
+    }
+
+    .fine-table tbody tr:hover {
+        background: #f7faf8;
+    }
+
+    .citizen-name {
+        font-weight: 600;
+        color: #12372a;
+    }
+
+    .fine-amount {
+        font-weight: 700;
+        color: #b02a37;
+        white-space: nowrap;
+    }
+
+    .location-cell {
+        max-width: 220px;
+    }
+
+    .reason-cell {
+        max-width: 240px;
+    }
+
+    .notes-cell {
+        max-width: 220px;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .status-pending {
+        background: #fff2dc;
+        color: #b76e00;
+    }
+
+    .status-issued {
+        background: #f8d7da;
+        color: #b02a37;
+    }
+
+    .status-paid {
+        background: #e4f4ea;
+        color: #198754;
+    }
+
+    .status-waived {
+        background: #e8f0ff;
+        color: #0d6efd;
+    }
+
+    .status-cancelled {
+        background: #e9ecef;
+        color: #6c757d;
+    }
+
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        background: #e4f4ea;
+        color: #198754;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .action-btn:hover {
+        background: #198754;
+        color: white;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 70px 20px;
+    }
+
+    .empty-state i {
+        font-size: 55px;
+        color: #b7c9be;
+        margin-bottom: 15px;
+    }
+
+    .empty-state h5 {
+        color: #12372a;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .empty-state p {
+        color: #6c757d;
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .empty-add-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 18px;
+        background: #198754;
+        color: white;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 9px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .empty-add-btn:hover {
+        background: #157347;
+        color: white;
+    }
+
+    .info-box {
+        margin-top: 20px;
+        background: #f0f8f3;
+        border-left: 4px solid #198754;
+        border-radius: 10px;
+        padding: 15px 18px;
+        color: #456052;
+        font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+
+        .fine-page {
+            padding: 18px;
+        }
+
+        .fine-header {
+            padding: 22px;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .header-content h2 {
+            font-size: 21px;
+        }
+
+        .fine-card {
+            padding: 18px;
+        }
+
+        .add-fine-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+    }
+
+</style>
+
+
+<div class="fine-page">
+
+    <!-- PAGE HEADER -->
+
+    <div class="fine-header">
+
+        <div class="header-content">
+
+            <h2>
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                Illegal Dumping Fine Management
+            </h2>
+
+            <p>
+                Record and monitor fines issued for confirmed
+                illegal dumping violations.
+            </p>
+
+        </div>
+
+
+        <!-- ADD FINE -->
+
+        <a
+            href="{% url 'issue_dumping_fine' %}"
+            class="add-fine-btn"
+        >
+
+            <i class="fa-solid fa-plus"></i>
+            Add Fine
+
+        </a>
+
+    </div>
+
+
+    <!-- FINE RECORDS -->
+
+    <div class="fine-card">
+
+        <div class="fine-card-header">
+
+            <h4>
+                <i class="fa-solid fa-receipt"></i>
+                Fine Records
+            </h4>
+
+            <div class="fine-count">
+                {{ fines|length }} Records
+            </div>
+
+        </div>
+
+
+        {% if fines %}
+
+        <div class="table-responsive">
+
+            <table class="fine-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Citizen</th>
+                        <th>Dumping Location</th>
+                        <th>Dumping Type</th>
+                        <th>Reported Date</th>
+                        <th>Fine Amount</th>
+                        <th>Reason</th>
+                        <th>Issued Date</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for fine in fines %}
+
+                    <tr>
+
+                        <!-- CITIZEN -->
+
+                        <td>
+
+                            <span class="citizen-name">
+
+                                {{ fine.dumping_report.citizen.get_full_name|default:fine.dumping_report.citizen.username }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- LOCATION -->
+
+                        <td class="location-cell">
+
+                            <i class="fa-solid fa-location-dot"></i>
+
+                            {{ fine.dumping_report.location }}
+
+                        </td>
+
+
+                        <!-- TYPE -->
+
+                        <td>
+
+                            {{ fine.dumping_report.get_dumping_type_display }}
+
+                        </td>
+
+
+                        <!-- REPORTED DATE -->
+
+                        <td>
+
+                            {{ fine.dumping_report.reported_date|date:"d M Y" }}
+
+                        </td>
+
+
+                        <!-- AMOUNT -->
+
+                        <td>
+
+                            <span class="fine-amount">
+
+                                ₹{{ fine.fine_amount }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- REASON -->
+
+                        <td class="reason-cell">
+
+                            {{ fine.reason }}
+
+                        </td>
+
+
+                        <!-- ISSUED DATE -->
+
+                        <td>
+
+                            {% if fine.issued_date %}
+
+                                {{ fine.issued_date|date:"d M Y" }}
+
+                            {% else %}
+
+                                <span class="text-muted">—</span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            {% if fine.status == 'PENDING' %}
+
+                                <span class="status-badge status-pending">
+                                    Pending
+                                </span>
+
+                            {% elif fine.status == 'ISSUED' %}
+
+                                <span class="status-badge status-issued">
+                                    Issued
+                                </span>
+
+                            {% elif fine.status == 'PAID' %}
+
+                                <span class="status-badge status-paid">
+                                    Paid
+                                </span>
+
+                            {% elif fine.status == 'WAIVED' %}
+
+                                <span class="status-badge status-waived">
+                                    Waived
+                                </span>
+
+                            {% elif fine.status == 'CANCELLED' %}
+
+                                <span class="status-badge status-cancelled">
+                                    Cancelled
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- NOTES -->
+
+                        <td class="notes-cell">
+
+                            {% if fine.notes %}
+
+                                {{ fine.notes }}
+
+                            {% else %}
+
+                                <span class="text-muted">—</span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+                            <a
+                                href="{% url 'issue_dumping_fine' %}"
+                                class="action-btn"
+                            >
+
+                                <i class="fa-solid fa-pen"></i>
+                                Edit
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-state">
+
+            <i class="fa-solid fa-file-circle-xmark"></i>
+
+            <h5>
+                No Fine Records
+            </h5>
+
+            <p>
+                No illegal dumping fines have been recorded yet.
+            </p>
+
+
+            <a
+                href="{% url 'issue_dumping_fine' %}"
+                class="empty-add-btn"
+            >
+
+                <i class="fa-solid fa-plus"></i>
+                Add First Fine
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+
+        <div class="info-box">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            Fines should be recorded only after the related
+            illegal dumping report has been reviewed and the
+            violation has been confirmed by the authorized
+            administrator.
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

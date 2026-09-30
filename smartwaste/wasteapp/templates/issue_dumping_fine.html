@@ -1,0 +1,612 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+    .fine-form-page {
+        padding: 30px;
+        background: #f4f7f5;
+        min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #12372a, #1f6f50);
+        color: white;
+        border-radius: 18px;
+        padding: 28px 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(18, 55, 42, 0.15);
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    .page-header p {
+        margin: 7px 0 0;
+        font-size: 14px;
+        opacity: 0.9;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 18px;
+        padding: 28px;
+        max-width: 900px;
+        margin: auto;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .card-title {
+        color: #12372a;
+        font-size: 19px;
+        font-weight: 700;
+        margin-bottom: 22px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #edf1ee;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        display: block;
+        margin-bottom: 7px;
+        color: #12372a;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    .form-control,
+    .form-select {
+        width: 100%;
+        border: 1px solid #dce5df;
+        border-radius: 10px;
+        padding: 11px 13px;
+        font-size: 13px;
+        outline: none;
+        box-sizing: border-box;
+        background: white;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 3px rgba(25,135,84,0.10);
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .amount-input {
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .report-preview {
+        background: #f7faf8;
+        border: 1px solid #e1ebe5;
+        border-radius: 12px;
+        padding: 18px;
+        margin-top: 10px;
+        display: none;
+    }
+
+    .report-preview.show {
+        display: block;
+    }
+
+    .preview-title {
+        color: #12372a;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .preview-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 20px;
+    }
+
+    .preview-item {
+        font-size: 12px;
+    }
+
+    .preview-label {
+        color: #6c757d;
+        font-weight: 600;
+        display: block;
+        margin-bottom: 3px;
+    }
+
+    .preview-value {
+        color: #12372a;
+        font-weight: 600;
+    }
+
+    .button-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .btn-submit {
+        border: none;
+        background: #198754;
+        color: white;
+        padding: 11px 22px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-submit:hover {
+        background: #157347;
+    }
+
+    .btn-cancel {
+        text-decoration: none;
+        background: #e9ecef;
+        color: #495057;
+        padding: 11px 22px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .info-box {
+        background: #f0f8f3;
+        border-left: 4px solid #198754;
+        padding: 13px 15px;
+        border-radius: 9px;
+        margin-bottom: 22px;
+        font-size: 13px;
+        color: #456052;
+    }
+
+    @media (max-width: 768px) {
+
+        .fine-form-page {
+            padding: 18px;
+        }
+
+        .page-header {
+            padding: 22px;
+        }
+
+        .page-header h2 {
+            font-size: 21px;
+        }
+
+        .form-card {
+            padding: 20px;
+        }
+
+        .preview-grid {
+            grid-template-columns: 1fr;
+        }
+
+    }
+
+</style>
+
+
+<div class="fine-form-page">
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <h2>
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            Issue Illegal Dumping Fine
+        </h2>
+
+        <p>
+            Record and manage a fine for a confirmed illegal dumping violation.
+        </p>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+
+    <div class="form-card">
+
+        <div class="card-title">
+
+            <i class="fa-solid fa-receipt"></i>
+            Fine Information
+
+        </div>
+
+
+        <div class="info-box">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            Select the related dumping report first. The report details
+            will be displayed below so the administrator can verify the
+            violation before recording the fine.
+
+        </div>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- DUMPING REPORT -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Dumping Report <span class="required">*</span>
+                </label>
+
+                <select
+                    name="report_id"
+                    id="reportSelect"
+                    class="form-select"
+                    required
+                >
+
+                    <option value="">
+                        -- Select Dumping Report --
+                    </option>
+
+                    {% for report in reports %}
+
+                    <option
+                        value="{{ report.id }}"
+                        data-citizen="{{ report.citizen.get_full_name|default:report.citizen.username }}"
+                        data-location="{{ report.location }}"
+                        data-type="{{ report.get_dumping_type_display }}"
+                        data-date="{{ report.reported_date|date:'d M Y' }}"
+                        data-status="{{ report.get_status_display }}"
+                        data-description="{{ report.description|default:'No description provided.' }}"
+                    >
+
+                        #{{ report.id }}
+                        -
+                        {{ report.citizen.get_full_name|default:report.citizen.username }}
+                        -
+                        {{ report.get_dumping_type_display }}
+                        -
+                        {{ report.reported_date|date:"d M Y" }}
+
+                    </option>
+
+                    {% empty %}
+
+                    <option value="">
+                        No dumping reports available
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+
+            <!-- REPORT PREVIEW -->
+
+            <div
+                id="reportPreview"
+                class="report-preview"
+            >
+
+                <div class="preview-title">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Selected Dumping Report
+
+                </div>
+
+
+                <div class="preview-grid">
+
+                    <div class="preview-item">
+
+                        <span class="preview-label">
+                            Citizen
+                        </span>
+
+                        <span
+                            class="preview-value"
+                            id="previewCitizen"
+                        >
+                        </span>
+
+                    </div>
+
+
+                    <div class="preview-item">
+
+                        <span class="preview-label">
+                            Dumping Type
+                        </span>
+
+                        <span
+                            class="preview-value"
+                            id="previewType"
+                        >
+                        </span>
+
+                    </div>
+
+
+                    <div class="preview-item">
+
+                        <span class="preview-label">
+                            Reported Date
+                        </span>
+
+                        <span
+                            class="preview-value"
+                            id="previewDate"
+                        >
+                        </span>
+
+                    </div>
+
+
+                    <div class="preview-item">
+
+                        <span class="preview-label">
+                            Report Status
+                        </span>
+
+                        <span
+                            class="preview-value"
+                            id="previewStatus"
+                        >
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="preview-item"
+                        style="grid-column: 1 / -1;"
+                    >
+
+                        <span class="preview-label">
+                            Location
+                        </span>
+
+                        <span
+                            class="preview-value"
+                            id="previewLocation"
+                        >
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="preview-item"
+                        style="grid-column: 1 / -1;"
+                    >
+
+                        <span class="preview-label">
+                            Description
+                        </span>
+
+                        <span
+                            class="preview-value"
+                            id="previewDescription"
+                        >
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FINE AMOUNT -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Fine Amount (₹) <span class="required">*</span>
+                </label>
+
+                <input
+                    type="number"
+                    name="fine_amount"
+                    class="form-control amount-input"
+                    min="0"
+                    step="0.01"
+                    placeholder="Enter fine amount"
+                    required
+                >
+
+            </div>
+
+
+            <!-- REASON -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Fine Reason <span class="required">*</span>
+                </label>
+
+                <textarea
+                    name="reason"
+                    class="form-control"
+                    placeholder="Enter the reason for issuing the fine..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- ISSUED DATE -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Issued Date <span class="required">*</span>
+                </label>
+
+                <input
+                    type="date"
+                    name="issued_date"
+                    class="form-control"
+                    required
+                >
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Fine Status
+                </label>
+
+                <select
+                    name="status"
+                    class="form-select"
+                >
+
+                    <option value="PENDING">
+                        Pending
+                    </option>
+
+                    <option value="ISSUED" selected>
+                        Issued
+                    </option>
+
+                    <option value="PAID">
+                        Paid
+                    </option>
+
+                    <option value="WAIVED">
+                        Waived
+                    </option>
+
+                    <option value="CANCELLED">
+                        Cancelled
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- NOTES -->
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Admin Notes
+                </label>
+
+                <textarea
+                    name="notes"
+                    class="form-control"
+                    placeholder="Enter any additional notes..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-row">
+
+                <button
+                    type="submit"
+                    class="btn-submit"
+                >
+
+                    <i class="fa-solid fa-check"></i>
+                    Save Fine
+
+                </button>
+
+
+                <a
+                    href="{% url 'admin_dumping_fines' %}"
+                    class="btn-cancel"
+                >
+
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const reportSelect = document.getElementById('reportSelect');
+
+    const reportPreview = document.getElementById('reportPreview');
+
+    reportSelect.addEventListener('change', function () {
+
+        const selectedOption =
+            this.options[this.selectedIndex];
+
+        if (!selectedOption.value) {
+
+            reportPreview.classList.remove('show');
+
+            return;
+        }
+
+        document.getElementById('previewCitizen').textContent =
+            selectedOption.dataset.citizen || '—';
+
+        document.getElementById('previewType').textContent =
+            selectedOption.dataset.type || '—';
+
+        document.getElementById('previewDate').textContent =
+            selectedOption.dataset.date || '—';
+
+        document.getElementById('previewStatus').textContent =
+            selectedOption.dataset.status || '—';
+
+        document.getElementById('previewLocation').textContent =
+            selectedOption.dataset.location || '—';
+
+        document.getElementById('previewDescription').textContent =
+            selectedOption.dataset.description || '—';
+
+        reportPreview.classList.add('show');
+
+    });
+
+</script>
+
+{% endblock %}

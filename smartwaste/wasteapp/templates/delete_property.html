@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #f4f8f5;
+    }
+
+    .delete-wrapper {
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .delete-card {
+        width: 100%;
+        max-width: 600px;
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 10px 35px rgba(18, 55, 42, 0.12);
+        text-align: center;
+    }
+
+    .warning-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 25px;
+        border-radius: 50%;
+        background: #fff3cd;
+        color: #dc3545;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+    }
+
+    .delete-card h2 {
+        color: #12372a;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .delete-card .description {
+        color: #6c757d;
+        margin-bottom: 25px;
+        line-height: 1.7;
+    }
+
+    .property-info {
+        background: #f4f8f5;
+        border: 1px solid #dce9e1;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 25px;
+        text-align: left;
+    }
+
+    .property-info p {
+        margin-bottom: 8px;
+        color: #495057;
+    }
+
+    .property-info p:last-child {
+        margin-bottom: 0;
+    }
+
+    .property-info strong {
+        color: #12372a;
+    }
+
+    .danger-warning {
+        background: #fff5f5;
+        border: 1px solid #f1b0b7;
+        color: #842029;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 25px;
+        text-align: left;
+    }
+
+    .success-info {
+        background: #eaf7ee;
+        border: 1px solid #b7dfc5;
+        color: #155724;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 25px;
+        text-align: left;
+    }
+
+    .btn-row {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn-custom {
+        border: none;
+        border-radius: 10px;
+        padding: 12px 24px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.2s ease;
+    }
+
+    .btn-cancel {
+        background: #e9ecef;
+        color: #343a40;
+    }
+
+    .btn-cancel:hover {
+        background: #dfe3e6;
+        color: #343a40;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: #ffffff;
+    }
+
+    .btn-delete:hover {
+        background: #bb2d3b;
+        color: #ffffff;
+    }
+
+    .btn-disabled {
+        background: #adb5bd;
+        color: #ffffff;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    @media (max-width: 576px) {
+        .delete-card {
+            padding: 30px 20px;
+        }
+
+        .btn-custom {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="delete-wrapper">
+
+    <div class="delete-card">
+
+        <div class="warning-icon">
+            <i class="fa-solid fa-trash"></i>
+        </div>
+
+        <h2>Delete Property?</h2>
+
+        <p class="description">
+            Are you sure you want to delete this property?
+            Please review the property details before continuing.
+        </p>
+
+        <div class="property-info">
+
+            <p>
+                <strong>Property ID:</strong>
+                {{ property.property_id }}
+            </p>
+
+            <p>
+                <strong>Owner:</strong>
+                {{ property.owner_name }}
+            </p>
+
+            <p>
+                <strong>Property Type:</strong>
+                {{ property.get_property_type_display }}
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                {{ property.phone|default:"Not provided" }}
+            </p>
+
+            <p>
+                <strong>Address:</strong>
+                {{ property.address }}
+            </p>
+
+        </div>
+
+        {% if has_related_records %}
+
+            <div class="danger-warning">
+                <strong>
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                    Deletion Not Available
+                </strong>
+
+                <div class="mt-2">
+                    This property has related waste collection or service
+                    records. It cannot be deleted because doing so could
+                    affect existing system history.
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="danger-warning">
+                <strong>
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                    Warning
+                </strong>
+
+                <div class="mt-2">
+                    This action cannot be undone.
+                    The property will be permanently removed from the system.
+                </div>
+            </div>
+
+        {% endif %}
+
+        <div class="btn-row">
+
+            <a
+                href="{% url 'property_detail' property.id %}"
+                class="btn-custom btn-cancel">
+                <i class="fa-solid fa-arrow-left me-2"></i>
+                Cancel
+            </a>
+
+            {% if has_related_records %}
+
+                <span class="btn-custom btn-disabled">
+                    <i class="fa-solid fa-lock me-2"></i>
+                    Cannot Delete
+                </span>
+
+            {% else %}
+
+                <form
+                    method="POST"
+                    action="{% url 'delete_property' property.id %}"
+                    style="display: inline;">
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="btn-custom btn-delete"
+                        onclick="return confirm('Are you sure you want to permanently delete this property?');">
+
+                        <i class="fa-solid fa-trash me-2"></i>
+                        Confirm Delete
+
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

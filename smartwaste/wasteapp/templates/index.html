@@ -1,0 +1,2662 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EcoPulse | Smart Waste Management</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        rel="stylesheet">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+
+    <style>
+
+        :root {
+
+            --eco-dark: #123b27;
+            --eco-dark-2: #0d2d1d;
+
+            --eco-green: #238b57;
+            --eco-green-2: #2ca968;
+
+            --eco-lime: #b4d92f;
+
+            --eco-light: #eef7e8;
+            --eco-soft: #f7faf6;
+
+            --eco-text: #24342b;
+            --eco-muted: #6c786f;
+
+            --border: #e5ece6;
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            font-family: 'Plus Jakarta Sans', sans-serif;
+
+            background: #ffffff;
+
+            color: var(--eco-text);
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .main-navbar {
+
+            background: #ffffff;
+
+            min-height: 82px;
+
+            border-bottom: 1px solid #edf1ed;
+
+            position: relative;
+
+            z-index: 1000;
+        }
+
+
+        .navbar-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            text-decoration: none;
+        }
+
+
+        .brand-icon {
+
+            width: 46px;
+
+            height: 46px;
+
+            background: #e8f4d8;
+
+            color: var(--eco-green);
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin-right: 11px;
+
+            font-size: 22px;
+        }
+
+
+        .brand-name {
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            color: var(--eco-dark);
+
+            letter-spacing: -1px;
+        }
+
+
+        .brand-name span {
+
+            color: var(--eco-green);
+        }
+
+
+        .navbar-nav {
+
+            align-items: center;
+
+            gap: 5px;
+        }
+
+
+        .nav-link {
+
+            color: #4f5c54 !important;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            padding: 10px 15px !important;
+
+            transition: 0.3s;
+        }
+
+
+        .nav-link:hover,
+        .nav-link.active {
+
+            color: var(--eco-green) !important;
+        }
+
+
+        .login-btn {
+
+            color: var(--eco-dark);
+
+            border: 1px solid #d4ddd6;
+
+            border-radius: 8px;
+
+            padding: 10px 21px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+
+        .login-btn:hover {
+
+            color: var(--eco-green);
+
+            border-color: var(--eco-green);
+        }
+
+
+        .get-started-btn {
+
+            background: var(--eco-green);
+
+            color: #ffffff;
+
+            border-radius: 8px;
+
+            padding: 11px 22px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition: 0.3s;
+        }
+
+
+        .get-started-btn:hover {
+
+            background: var(--eco-dark);
+
+            color: white;
+
+            transform: translateY(-1px);
+        }
+
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+
+            position: relative;
+
+            min-height: 650px;
+
+            overflow: hidden;
+
+            background:
+
+                radial-gradient(
+                    circle at 80% 30%,
+                    rgba(132, 198, 48, 0.28),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    120deg,
+                    #0d4429 0%,
+                    #1e7045 55%,
+                    #5da83b 100%
+                );
+        }
+
+
+        /* Decorative background */
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 80%,
+                    rgba(255,255,255,0.08),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 90% 10%,
+                    rgba(255,255,255,0.08),
+                    transparent 25%
+                );
+
+            pointer-events: none;
+        }
+
+
+        .hero-container {
+
+            position: relative;
+
+            z-index: 2;
+
+            min-height: 650px;
+
+            display: flex;
+
+            align-items: center;
+        }
+
+
+        .hero-content {
+
+            padding: 70px 0;
+
+            color: white;
+
+            max-width: 610px;
+        }
+
+
+        .hero-small-title {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color: rgba(255,255,255,0.86);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.8px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 22px;
+        }
+
+
+        .hero-small-title::before {
+
+            content: "";
+
+            width: 28px;
+
+            height: 3px;
+
+            border-radius: 10px;
+
+            background: var(--eco-lime);
+        }
+
+
+        .hero h1 {
+
+            font-size: clamp(48px, 6vw, 76px);
+
+            line-height: 0.99;
+
+            letter-spacing: -3.5px;
+
+            font-weight: 800;
+
+            margin-bottom: 25px;
+
+            color: white;
+        }
+
+
+        .hero h1 span {
+
+            color: var(--eco-lime);
+        }
+
+
+        .hero-description {
+
+            max-width: 560px;
+
+            color: rgba(255,255,255,0.78);
+
+            font-size: 16px;
+
+            line-height: 1.8;
+
+            margin-bottom: 32px;
+        }
+
+
+        .hero-buttons {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 13px;
+        }
+
+
+        .btn-hero-primary {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            background: var(--eco-lime);
+
+            color: #16351d;
+
+            padding: 14px 24px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition: 0.3s;
+        }
+
+
+        .btn-hero-primary:hover {
+
+            background: white;
+
+            color: var(--eco-dark);
+
+            transform: translateY(-2px);
+        }
+
+
+        .btn-hero-outline {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            background: rgba(255,255,255,0.10);
+
+            color: white;
+
+            border: 1px solid rgba(255,255,255,0.45);
+
+            padding: 14px 24px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition: 0.3s;
+
+            backdrop-filter: blur(5px);
+        }
+
+
+        .btn-hero-outline:hover {
+
+            background: white;
+
+            color: var(--eco-dark);
+
+            border-color: white;
+        }
+
+
+        /* =====================================================
+           HERO IMAGE
+        ===================================================== */
+
+        .hero-image-wrapper {
+
+            position: relative;
+
+            padding: 40px 0 40px 30px;
+        }
+
+
+        .hero-image {
+
+            width: 100%;
+
+            height: 440px;
+
+            object-fit: cover;
+
+            border-radius: 24px;
+
+            border: 5px solid rgba(255,255,255,0.28);
+
+            box-shadow:
+
+                0 25px 60px rgba(0,0,0,0.20);
+        }
+
+
+        .image-label {
+
+            position: absolute;
+
+            bottom: 18px;
+
+            left: 55px;
+
+            right: 25px;
+
+            background: rgba(255,255,255,0.94);
+
+            border-radius: 12px;
+
+            padding: 15px 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+
+        .image-label-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 10px;
+
+            background: #e7f4dc;
+
+            color: var(--eco-green);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+        }
+
+
+        .image-label strong {
+
+            display: block;
+
+            color: var(--eco-dark);
+
+            font-size: 13px;
+        }
+
+
+        .image-label span {
+
+            display: block;
+
+            color: #718078;
+
+            font-size: 11px;
+
+            margin-top: 2px;
+        }
+
+
+
+        /* =====================================================
+           INTRO
+        ===================================================== */
+
+        .intro-section {
+
+            padding: 90px 0;
+
+            background: white;
+        }
+
+
+        .section-label {
+
+            color: var(--eco-green);
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.6px;
+
+            margin-bottom: 11px;
+        }
+
+
+        .section-title {
+
+            color: var(--eco-dark);
+
+            font-size: clamp(30px, 4vw, 44px);
+
+            font-weight: 800;
+
+            letter-spacing: -1.5px;
+
+            line-height: 1.15;
+        }
+
+
+        .section-text {
+
+            color: var(--eco-muted);
+
+            font-size: 15px;
+
+            line-height: 1.8;
+        }
+
+
+
+        /* =====================================================
+           SOLUTIONS
+        ===================================================== */
+
+        .solutions-section {
+
+            padding: 90px 0;
+
+            background: var(--eco-soft);
+        }
+
+
+        .solution-card {
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            padding: 28px;
+
+            height: 100%;
+
+            transition: 0.3s;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .solution-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 90px;
+
+            height: 90px;
+
+            border-radius: 50%;
+
+            background: #edf7e7;
+
+            right: -35px;
+
+            top: -35px;
+        }
+
+
+        .solution-card:hover {
+
+            transform: translateY(-7px);
+
+            border-color: #b9d9c3;
+
+            box-shadow: 0 20px 40px rgba(18,59,39,0.10);
+        }
+
+
+        .solution-icon {
+
+            width: 54px;
+
+            height: 54px;
+
+            background: #e8f5df;
+
+            color: var(--eco-green);
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+
+            margin-bottom: 21px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .solution-card h5 {
+
+            color: var(--eco-dark);
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            margin-bottom: 11px;
+        }
+
+
+        .solution-card p {
+
+            color: var(--eco-muted);
+
+            font-size: 13px;
+
+            line-height: 1.75;
+
+            margin: 0;
+        }
+
+
+
+        /* =====================================================
+           PROCESS
+        ===================================================== */
+
+        .process-section {
+
+            padding: 90px 0;
+
+            background: white;
+        }
+
+
+        .process-card {
+
+            position: relative;
+
+            text-align: center;
+
+            padding: 25px 18px;
+        }
+
+
+        .process-number {
+
+            width: 60px;
+
+            height: 60px;
+
+            margin: 0 auto 20px;
+
+            background: var(--eco-dark);
+
+            color: var(--eco-lime);
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+
+        .process-card h5 {
+
+            color: var(--eco-dark);
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            margin-bottom: 10px;
+        }
+
+
+        .process-card p {
+
+            color: var(--eco-muted);
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            margin: 0;
+        }
+
+
+        .process-arrow {
+
+            position: absolute;
+
+            top: 51px;
+
+            right: -10px;
+
+            color: #a8c9b1;
+
+            font-size: 18px;
+        }
+
+
+
+        /* =====================================================
+           FOOD SECTION
+        ===================================================== */
+
+        .food-section {
+
+            padding: 90px 0;
+
+            background: var(--eco-soft);
+        }
+
+
+        .food-image-wrapper {
+
+            position: relative;
+        }
+
+
+        .food-image {
+
+            width: 100%;
+
+            height: 450px;
+
+            object-fit: cover;
+
+            border-radius: 20px;
+
+            box-shadow: 0 20px 45px rgba(18,59,39,0.12);
+        }
+
+
+        .food-badge {
+
+            position: absolute;
+
+            left: 20px;
+
+            bottom: 20px;
+
+            background: white;
+
+            padding: 13px 18px;
+
+            border-radius: 10px;
+
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: var(--eco-dark);
+        }
+
+
+        .food-content {
+
+            padding-left: 35px;
+        }
+
+
+        .food-content h2 {
+
+            color: var(--eco-dark);
+
+            font-size: 40px;
+
+            font-weight: 800;
+
+            line-height: 1.15;
+
+            letter-spacing: -1.3px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .food-content p {
+
+            color: var(--eco-muted);
+
+            line-height: 1.8;
+
+            font-size: 15px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .food-point {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .food-point i {
+
+            color: var(--eco-green);
+
+            margin-top: 4px;
+        }
+
+
+        .food-point span {
+
+            color: #56645b;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+
+        /* =====================================================
+           CATEGORIES
+        ===================================================== */
+
+        .category-section {
+
+            padding: 90px 0;
+
+            background: white;
+        }
+
+
+        .category-card {
+
+            background: var(--eco-soft);
+
+            border: 1px solid #e1eae2;
+
+            border-radius: 12px;
+
+            padding: 26px 12px;
+
+            text-align: center;
+
+            transition: 0.3s;
+
+            height: 100%;
+        }
+
+
+        .category-card:hover {
+
+            background: #edf7e8;
+
+            transform: translateY(-5px);
+
+            border-color: #bfd9c5;
+        }
+
+
+        .category-card i {
+
+            color: var(--eco-green);
+
+            font-size: 27px;
+
+            margin-bottom: 13px;
+        }
+
+
+        .category-card h6 {
+
+            color: var(--eco-dark);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin: 0;
+        }
+
+
+
+        /* =====================================================
+           CTA
+        ===================================================== */
+
+        .cta-section {
+
+            padding: 85px 0;
+
+            background:
+
+                linear-gradient(
+                    120deg,
+                    #103d27,
+                    #216f45
+                );
+
+            color: white;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .cta-section::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 350px;
+
+            height: 350px;
+
+            border-radius: 50%;
+
+            background: rgba(180,217,47,0.12);
+
+            right: -120px;
+
+            top: -150px;
+        }
+
+
+        .cta-section h2 {
+
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 39px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .cta-section p {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 650px;
+
+            margin: 0 auto 28px;
+
+            color: rgba(255,255,255,0.75);
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+
+        .cta-btn {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            background: var(--eco-lime);
+
+            color: var(--eco-dark);
+
+            padding: 14px 25px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition: 0.3s;
+        }
+
+
+        .cta-btn:hover {
+
+            background: white;
+
+            color: var(--eco-dark);
+
+            transform: translateY(-2px);
+        }
+
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            background: #0b2819;
+
+            color: white;
+
+            padding: 55px 0 25px;
+        }
+
+
+        .footer-brand {
+
+            font-size: 25px;
+
+            font-weight: 800;
+        }
+
+
+        .footer-brand span {
+
+            color: #a9d837;
+        }
+
+
+        .footer-text {
+
+            color: rgba(255,255,255,0.57);
+
+            font-size: 13px;
+
+            line-height: 1.8;
+
+            max-width: 500px;
+        }
+
+
+        .footer-title {
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            margin-bottom: 17px;
+        }
+
+
+        .footer-links {
+
+            list-style: none;
+
+            padding: 0;
+
+            margin: 0;
+        }
+
+
+        .footer-links li {
+
+            margin-bottom: 10px;
+        }
+
+
+        .footer-links a {
+
+            color: rgba(255,255,255,0.57);
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition: 0.3s;
+        }
+
+
+        .footer-links a:hover {
+
+            color: white;
+        }
+
+
+        .footer-bottom {
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+
+            margin-top: 35px;
+
+            padding-top: 20px;
+
+            color: rgba(255,255,255,0.42);
+
+            font-size: 11px;
+        }
+
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 991px) {
+
+            .main-navbar {
+
+                min-height: 72px;
+            }
+
+
+            .navbar-nav {
+
+                padding: 15px 0;
+
+                align-items: flex-start;
+            }
+
+
+            .hero {
+
+                min-height: auto;
+            }
+
+
+            .hero-container {
+
+                min-height: auto;
+            }
+
+
+            .hero-content {
+
+                padding: 80px 0 40px;
+            }
+
+
+            .hero-image-wrapper {
+
+                padding: 20px 0 70px;
+            }
+
+
+            .hero-image {
+
+                height: 400px;
+            }
+
+
+            .food-content {
+
+                padding-left: 0;
+
+                padding-top: 30px;
+            }
+
+
+            .process-arrow {
+
+                display: none;
+            }
+        }
+
+
+
+        @media (max-width: 576px) {
+
+            .brand-name {
+
+                font-size: 23px;
+            }
+
+
+            .brand-icon {
+
+                width: 39px;
+
+                height: 39px;
+
+                font-size: 18px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 46px;
+
+                letter-spacing: -2px;
+            }
+
+
+            .hero-description {
+
+                font-size: 14px;
+            }
+
+
+            .hero-image {
+
+                height: 300px;
+
+                border-radius: 17px;
+            }
+
+
+            .image-label {
+
+                left: 15px;
+
+                right: 15px;
+
+                bottom: 15px;
+            }
+
+
+            .food-image {
+
+                height: 300px;
+            }
+
+
+            .food-content h2 {
+
+                font-size: 31px;
+            }
+
+
+            .section-title {
+
+                font-size: 31px;
+            }
+
+
+            .cta-section h2 {
+
+                font-size: 30px;
+            }
+
+
+            .footer-bottom {
+
+                text-align: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVIGATION
+====================================================== -->
+
+<nav class="navbar navbar-expand-lg main-navbar">
+
+    <div class="container">
+
+
+        <!-- YOUR ECOPULSE BRAND - KEPT -->
+        <a
+            class="navbar-brand"
+            href="{% url 'home' %}"
+        >
+
+            <div class="brand-icon">
+
+                <i class="fa-solid fa-recycle"></i>
+
+            </div>
+
+            <div class="brand-name">
+
+                Eco<span>Pulse</span>
+
+            </div>
+
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavigation"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div
+            class="collapse navbar-collapse"
+            id="mainNavigation"
+        >
+
+            <ul class="navbar-nav ms-auto">
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link active"
+                        href="{% url 'home' %}"
+                    >
+                        Home
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="#solutions"
+                    >
+                        Services
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="#food"
+                    >
+                        Food Redistribution
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="#categories"
+                    >
+                        Waste Categories
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+
+                    <a
+                        href="{% url 'login' %}"
+                        class="login-btn"
+                    >
+                        Login
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+
+                    <a
+                        href="{% url 'register' %}"
+                        class="get-started-btn"
+                    >
+                        Get Started
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="hero">
+
+    <div class="container hero-container">
+
+        <div class="row align-items-center w-100">
+
+
+            <!-- LEFT CONTENT -->
+
+            <div class="col-lg-6">
+
+                <div class="hero-content">
+
+                    <div class="hero-small-title">
+
+                        Smart Waste Management
+
+                    </div>
+
+
+                    <h1>
+
+                        Cleaner
+
+                        <span>Communities.</span>
+
+                        Smarter Waste Solutions.
+
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        EcoPulse connects citizens, sanitation
+                        workers and administrators through one
+                        digital platform for efficient waste
+                        collection, reporting, segregation and
+                        community food redistribution.
+
+                    </p>
+
+
+                    <div class="hero-buttons">
+
+
+                        <a
+                            href="{% url 'register' %}"
+                            class="btn-hero-primary"
+                        >
+
+                            Get Started
+
+                            <i class="fa-solid fa-arrow-right ms-2"></i>
+
+                        </a>
+
+
+                        <a
+                            href="#solutions"
+                            class="btn-hero-outline"
+                        >
+
+                            Explore Services
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RIGHT IMAGE -->
+
+            <div class="col-lg-6">
+
+                <div class="hero-image-wrapper">
+
+
+                    <img
+                        src="https://images.pexels.com/photos/13682408/pexels-photo-13682408.jpeg?auto=compress&dpr=1&w=1260"
+                        alt="Waste collection workers in Kochi"
+                        class="hero-image"
+                    >
+
+
+                    <div class="image-label">
+
+                        <div class="image-label-icon">
+
+                            <i class="fa-solid fa-recycle"></i>
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                Smarter Waste Management
+                            </strong>
+
+                            <span>
+                                Connecting people, services and communities
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     INTRO
+====================================================== -->
+
+<section class="intro-section">
+
+    <div class="container">
+
+        <div class="row justify-content-center text-center">
+
+            <div class="col-lg-8">
+
+
+                <div class="section-label">
+
+                    Sustainable Community Management
+
+                </div>
+
+
+                <h2 class="section-title mb-4">
+
+                    One Platform for a Cleaner Community
+
+                </h2>
+
+
+                <p class="section-text">
+
+                    EcoPulse brings together citizens,
+                    sanitation workers and administrators
+                    to make waste collection, reporting,
+                    segregation and community participation
+                    easier to manage.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SOLUTIONS
+====================================================== -->
+
+<section
+    class="solutions-section"
+    id="solutions"
+>
+
+    <div class="container">
+
+
+        <div class="text-center mb-5">
+
+            <div class="section-label">
+
+                Our Services
+
+            </div>
+
+
+            <h2 class="section-title">
+
+                Complete Waste Management Solutions
+
+            </h2>
+
+
+            <p
+                class="section-text mt-3 mx-auto"
+                style="max-width: 680px;"
+            >
+
+                Designed to connect every important part of
+                community waste management through one
+                digital system.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="row g-4">
+
+
+            <!-- PROPERTY -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="solution-card">
+
+                    <div class="solution-icon">
+
+                        <i class="fa-solid fa-house"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Property Management
+
+                    </h5>
+
+
+                    <p>
+
+                        Register properties and maintain
+                        organized property information for
+                        efficient waste collection and
+                        property-wise history.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- COLLECTION -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="solution-card">
+
+                    <div class="solution-icon">
+
+                        <i class="fa-solid fa-truck"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Waste Collection
+
+                    </h5>
+
+
+                    <p>
+
+                        Sanitation workers can verify
+                        properties, record collection activity
+                        and categorize collected waste.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DUMPING -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="solution-card">
+
+                    <div class="solution-icon">
+
+                        <i class="fa-solid fa-camera"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Illegal Dumping Reports
+
+                    </h5>
+
+
+                    <p>
+
+                        Citizens can report inappropriate
+                        dumping locations and provide photo
+                        evidence for administrative review.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BULK -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="solution-card">
+
+                    <div class="solution-icon">
+
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Bulk Waste Pickup
+
+                    </h5>
+
+
+                    <p>
+
+                        Request collection for furniture,
+                        appliances, garden waste and other
+                        large discarded materials.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FOOD -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="solution-card">
+
+                    <div class="solution-icon">
+
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Food Redistribution
+
+                    </h5>
+
+
+                    <p>
+
+                        Connect surplus food donors with
+                        organizations that can request and
+                        redistribute usable food.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ADMIN -->
+
+            <div class="col-md-6 col-lg-4">
+
+                <div class="solution-card">
+
+                    <div class="solution-icon">
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        Administrative Monitoring
+
+                    </h5>
+
+
+                    <p>
+
+                        Administrators can monitor properties,
+                        workers, collections, reports and
+                        community activities.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HOW IT WORKS
+====================================================== -->
+
+<section class="process-section">
+
+    <div class="container">
+
+
+        <div class="text-center mb-5">
+
+            <div class="section-label">
+
+                How EcoPulse Works
+
+            </div>
+
+
+            <h2 class="section-title">
+
+                From Registration to Responsible Collection
+
+            </h2>
+
+        </div>
+
+
+
+        <div class="row g-4">
+
+
+            <div class="col-md-3">
+
+                <div class="process-card">
+
+
+                    <div class="process-number">
+
+                        01
+
+                    </div>
+
+
+                    <h5>
+
+                        Register
+
+                    </h5>
+
+
+                    <p>
+
+                        Citizens register and maintain
+                        their property information.
+
+                    </p>
+
+
+                    <i class="fa-solid fa-arrow-right process-arrow"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <div class="process-card">
+
+
+                    <div class="process-number">
+
+                        02
+
+                    </div>
+
+
+                    <h5>
+
+                        Collect
+
+                    </h5>
+
+
+                    <p>
+
+                        Workers verify properties and
+                        record waste collection.
+
+                    </p>
+
+
+                    <i class="fa-solid fa-arrow-right process-arrow"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <div class="process-card">
+
+
+                    <div class="process-number">
+
+                        03
+
+                    </div>
+
+
+                    <h5>
+
+                        Categorize
+
+                    </h5>
+
+
+                    <p>
+
+                        Waste is recorded according to
+                        important waste categories.
+
+                    </p>
+
+
+                    <i class="fa-solid fa-arrow-right process-arrow"></i>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <div class="process-card">
+
+
+                    <div class="process-number">
+
+                        04
+
+                    </div>
+
+
+                    <h5>
+
+                        Track
+
+                    </h5>
+
+
+                    <p>
+
+                        Administrators monitor activities
+                        and system records.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOD REDISTRIBUTION
+====================================================== -->
+
+<section
+    class="food-section"
+    id="food"
+>
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+
+            <div class="col-lg-6">
+
+                <div class="food-image-wrapper">
+
+
+                    <img
+                        src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85"
+                        alt="Community food"
+                        class="food-image"
+                    >
+
+
+                    <div class="food-badge">
+
+                        <i class="fa-solid fa-heart me-2"></i>
+
+                        Community Food Redistribution
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-lg-6">
+
+
+                <div class="food-content">
+
+
+                    <div class="section-label">
+
+                        Community Food Bridge
+
+                    </div>
+
+
+                    <h2>
+
+                        Turning Surplus Food
+                        Into Community Support
+
+                    </h2>
+
+
+                    <p>
+
+                        EcoPulse provides a digital connection
+                        between food donors and organizations
+                        that can request and redistribute
+                        usable surplus food.
+
+                    </p>
+
+
+                    <div class="food-point">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <span>
+
+                            Hotels and restaurants can register
+                            surplus food.
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="food-point">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <span>
+
+                            Organizations can view available
+                            food donations.
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="food-point">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <span>
+
+                            Food requests and fulfillment can
+                            be digitally tracked.
+
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'register' %}"
+                        class="btn-hero-primary mt-3"
+                    >
+
+                        Join EcoPulse
+
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     WASTE CATEGORIES
+====================================================== -->
+
+<section
+    class="category-section"
+    id="categories"
+>
+
+    <div class="container">
+
+
+        <div class="text-center mb-5">
+
+
+            <div class="section-label">
+
+                Waste Segregation
+
+            </div>
+
+
+            <h2 class="section-title">
+
+                Responsible Waste Categorization
+
+            </h2>
+
+
+            <p
+                class="section-text mt-3 mx-auto"
+                style="max-width: 700px;"
+            >
+
+                Collected waste can be recorded according
+                to its category to support better processing,
+                recycling and responsible disposal.
+
+            </p>
+
+        </div>
+
+
+
+        <div class="row g-3">
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="category-card">
+
+                    <i class="fa-solid fa-leaf"></i>
+
+                    <h6>
+                        Biodegradable
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="category-card">
+
+                    <i class="fa-solid fa-bottle-water"></i>
+
+                    <h6>
+                        Plastic
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="category-card">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                    <h6>
+                        Paper
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="category-card">
+
+                    <i class="fa-solid fa-wine-bottle"></i>
+
+                    <h6>
+                        Glass
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="category-card">
+
+                    <i class="fa-solid fa-cubes-stacked"></i>
+
+                    <h6>
+                        Metal
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="category-card">
+
+                    <i class="fa-solid fa-plug"></i>
+
+                    <h6>
+                        Electronic
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="category-card">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <h6>
+                        Hazardous
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-md-3">
+
+                <div class="category-card">
+
+                    <i class="fa-solid fa-recycle"></i>
+
+                    <h6>
+                        Other Waste
+                    </h6>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CTA
+====================================================== -->
+
+<section class="cta-section">
+
+    <div class="container text-center">
+
+
+        <h2>
+
+            Build a Cleaner Community With EcoPulse
+
+        </h2>
+
+
+        <p>
+
+            Register your property, participate in
+            responsible waste management and help
+            reduce food wastage in your community.
+
+        </p>
+
+
+        <a
+            href="{% url 'register' %}"
+            class="cta-btn"
+        >
+
+            Get Started
+
+            <i class="fa-solid fa-arrow-right ms-2"></i>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="row gy-4">
+
+
+            <div class="col-lg-6">
+
+
+                <!-- ECO PULSE WORD KEPT -->
+
+                <div class="footer-brand mb-3">
+
+                    Eco<span>Pulse</span>
+
+                </div>
+
+
+                <p class="footer-text">
+
+                    A smart digital platform for waste
+                    collection, property management,
+                    illegal dumping reporting, waste
+                    segregation and community food
+                    redistribution.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="col-6 col-lg-3">
+
+
+                <div class="footer-title">
+
+                    Quick Links
+
+                </div>
+
+
+                <ul class="footer-links">
+
+
+                    <li>
+
+                        <a href="{% url 'home' %}">
+                            Home
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="#solutions">
+                            Services
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="#food">
+                            Food Redistribution
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="{% url 'login' %}">
+                            Login
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+
+
+            <div class="col-6 col-lg-3">
+
+
+                <div class="footer-title">
+
+                    Platform
+
+                </div>
+
+
+                <ul class="footer-links">
+
+
+                    <li>
+
+                        <a href="#solutions">
+                            Waste Collection
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="#solutions">
+                            Bulk Pickup
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="#solutions">
+                            Dumping Reports
+                        </a>
+
+                    </li>
+
+
+                    <li>
+
+                        <a href="#categories">
+                            Waste Categories
+                        </a>
+
+                    </li>
+
+
+                </ul>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="footer-bottom
+                    d-flex
+                    flex-column
+                    flex-md-row
+                    justify-content-between
+                    align-items-center">
+
+
+            <div>
+
+                © 2026 EcoPulse. All rights reserved.
+
+            </div>
+
+
+            <div class="mt-2 mt-md-0">
+
+                Smart Waste & Community Food
+                Redistribution System
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,428 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+
+    body {
+        background: #f4f7f5;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .storage-page {
+        padding: 30px;
+    }
+
+    .page-header {
+        background: linear-gradient(135deg, #12372a, #1f6f50);
+        color: white;
+        border-radius: 18px;
+        padding: 28px 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(18, 55, 42, 0.15);
+    }
+
+    .page-header h2 {
+        margin: 0;
+        font-weight: 700;
+        font-size: 26px;
+    }
+
+    .page-header p {
+        margin: 7px 0 0;
+        opacity: 0.9;
+        font-size: 14px;
+    }
+
+    .storage-card {
+        background: white;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+    }
+
+    .storage-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .storage-card-header h4 {
+        margin: 0;
+        color: #12372a;
+        font-weight: 700;
+    }
+
+    .record-count {
+        background: #e4f4ea;
+        color: #198754;
+        padding: 7px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .storage-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1000px;
+    }
+
+    .storage-table thead th {
+        background: #12372a;
+        color: white;
+        padding: 14px 12px;
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .storage-table thead th:first-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    .storage-table thead th:last-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    .storage-table tbody td {
+        padding: 15px 12px;
+        border-bottom: 1px solid #edf1ee;
+        font-size: 13px;
+        color: #495057;
+        vertical-align: middle;
+    }
+
+    .storage-table tbody tr:hover {
+        background: #f7faf8;
+    }
+
+    .property-id {
+        font-weight: 700;
+        color: #198754;
+    }
+
+    .worker-name {
+        font-weight: 600;
+        color: #12372a;
+    }
+
+    .storage-location {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .status-stored {
+        background: #e8f0ff;
+        color: #0d6efd;
+    }
+
+    .status-transferred {
+        background: #fff2dc;
+        color: #b76e00;
+    }
+
+    .status-processed {
+        background: #e4f4ea;
+        color: #198754;
+    }
+
+    .status-disposed {
+        background: #f8d7da;
+        color: #b02a37;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 70px 20px;
+    }
+
+    .empty-state i {
+        font-size: 55px;
+        color: #b7c9be;
+        margin-bottom: 15px;
+    }
+
+    .empty-state h5 {
+        color: #12372a;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .empty-state p {
+        color: #6c757d;
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .info-box {
+        margin-top: 20px;
+        background: #f0f8f3;
+        border-left: 4px solid #198754;
+        border-radius: 10px;
+        padding: 15px 18px;
+        color: #456052;
+        font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+
+        .storage-page {
+            padding: 18px;
+        }
+
+        .page-header {
+            padding: 22px;
+        }
+
+        .page-header h2 {
+            font-size: 21px;
+        }
+
+        .storage-card {
+            padding: 18px;
+        }
+    }
+
+</style>
+
+
+<div class="storage-page">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+
+        <h2>
+            <i class="fa-solid fa-warehouse"></i>
+            Waste Storage Management
+        </h2>
+
+        <p>
+            Monitor the storage, transfer, processing and disposal
+            status of collected waste.
+        </p>
+
+    </div>
+
+
+    <!-- STORAGE RECORDS -->
+    <div class="storage-card">
+
+        <div class="storage-card-header">
+
+            <div>
+                <h4>
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    Storage Records
+                </h4>
+            </div>
+
+            <div class="record-count">
+                {{ storage_records|length }} Records
+            </div>
+
+        </div>
+
+
+        {% if storage_records %}
+
+        <div class="table-responsive">
+
+            <table class="storage-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Property ID</th>
+
+                        <th>Owner</th>
+
+                        <th>Worker</th>
+
+                        <th>Collection Date</th>
+
+                        <th>Storage Location</th>
+
+                        <th>Received Date</th>
+
+                        <th>Status</th>
+
+                        <th>Notes</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for record in storage_records %}
+
+                    <tr>
+
+                        <td>
+                            <span class="property-id">
+                                {{ record.collection_record.property.property_id }}
+                            </span>
+                        </td>
+
+
+                        <td>
+                            {{ record.collection_record.property.owner_name }}
+                        </td>
+
+
+                        <td>
+
+                            <span class="worker-name">
+
+                                {% if record.collection_record.worker.get_full_name %}
+                                    {{ record.collection_record.worker.get_full_name }}
+                                {% else %}
+                                    {{ record.collection_record.worker.username }}
+                                {% endif %}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            {{ record.collection_record.collection_date|date:"d M Y" }}
+                        </td>
+
+
+                        <td>
+
+                            <span class="storage-location">
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                {{ record.storage_location }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            {{ record.received_date|date:"d M Y" }}
+                        </td>
+
+
+                        <td>
+
+                            {% if record.status == 'STORED' %}
+
+                                <span class="status-badge status-stored">
+                                    Stored
+                                </span>
+
+                            {% elif record.status == 'TRANSFERRED' %}
+
+                                <span class="status-badge status-transferred">
+                                    Transferred
+                                </span>
+
+                            {% elif record.status == 'PROCESSED' %}
+
+                                <span class="status-badge status-processed">
+                                    Processed
+                                </span>
+
+                            {% elif record.status == 'DISPOSED' %}
+
+                                <span class="status-badge status-disposed">
+                                    Disposed
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge">
+                                    {{ record.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if record.notes %}
+
+                                {{ record.notes }}
+
+                            {% else %}
+
+                                <span class="text-muted">
+                                    —
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+        <!-- EMPTY STATE -->
+
+        <div class="empty-state">
+
+            <i class="fa-solid fa-box-open"></i>
+
+            <h5>
+                No Waste Storage Records
+            </h5>
+
+            <p>
+                No collected waste has been added to storage yet.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <div class="info-box">
+
+            <i class="fa-solid fa-circle-info"></i>
+
+            Waste storage records are linked with the
+            corresponding collection records. Admin can use this
+            section to monitor where collected waste is currently
+            stored and track its processing status.
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

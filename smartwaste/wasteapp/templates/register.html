@@ -1,0 +1,437 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EcoPulse - Registration</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="py-5">
+
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-4"
+                         role="alert">
+
+                        {{ message }}
+
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close">
+                        </button>
+
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+
+            <!-- Logo -->
+            <div class="text-center mb-4">
+
+                <a href="{% url 'home' %}" class="text-decoration-none">
+
+                    <h3 class="fw-bold text-eco-primary">
+                        Eco<span style="color: var(--eco-secondary);">Pulse</span>
+                    </h3>
+
+                </a>
+
+                <p class="text-muted small">
+                    Join the Digital Sanitation & Food Redistribution Network
+                </p>
+
+            </div>
+
+
+            <!-- Registration Card -->
+            <div class="card card-eco p-4 bg-white">
+
+                <form action="{% url 'register' %}"
+                      method="POST"
+                      id="registrationForm">
+
+                    {% csrf_token %}
+
+
+                    <!-- Account Details -->
+                    <h5 class="fw-bold text-eco-primary mb-3">
+
+                        <i class="fa-solid fa-user-plus me-2"></i>
+                        Account Details
+
+                    </h5>
+
+
+                    <!-- Category -->
+                    <div class="row g-3 mb-3">
+
+                        <div class="col-md-12">
+
+                            <label class="form-label small fw-bold">
+                                Select Registration Category
+                            </label>
+
+                            <select class="form-select"
+                                    id="accountCategory"
+                                    name="account_category"
+                                    onchange="toggleFormFields()"
+                                    required>
+
+                                <option value="citizen">
+                                    Resident / House Owner / Apartment
+                                </option>
+
+                                <option value="business">
+                                    Hotel / Restaurant / Commercial Establishment
+                                    (Food Donor)
+                                </option>
+
+                                <option value="ngo">
+                                    NGO / Orphanage / Community Kitchen
+                                    (Food Receiver)
+                                </option>
+
+                                <option value="worker">
+                                    Sanitation Worker
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Common Fields -->
+                    <div class="row g-3 mb-3">
+
+                        <!-- Full Name -->
+                        <div class="col-md-6">
+
+                            <label class="form-label small fw-bold">
+                                Full Name / Entity Name
+                            </label>
+
+                            <input type="text"
+                                   name="full_name"
+                                   id="fullName"
+                                   class="form-control"
+                                   placeholder="e.g. Anu Worker"
+                                   minlength="3"
+                                   maxlength="100"
+                                   required>
+
+                            <div class="invalid-feedback">
+                                Please enter a valid name.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Phone -->
+                        <div class="col-md-6">
+
+                            <label class="form-label small fw-bold">
+                                Phone Number
+                            </label>
+
+                            <input type="tel"
+                                   name="phone"
+                                   id="phone"
+                                   class="form-control"
+                                   placeholder="9876543210"
+                                   pattern="[0-9]{10}"
+                                   maxlength="10"
+                                   required>
+
+                            <div class="invalid-feedback">
+                                Enter a valid 10-digit phone number.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+
+                            <label class="form-label small fw-bold">
+                                Email Address
+                            </label>
+
+                            <input type="email"
+                                   name="email"
+                                   id="email"
+                                   class="form-control"
+                                   placeholder="name@domain.com"
+                                   required>
+
+                            <div class="invalid-feedback">
+                                Enter a valid email address.
+                            </div>
+
+                        </div>
+
+
+                        <!-- Password -->
+                        <div class="col-md-6">
+
+                            <label class="form-label small fw-bold">
+                                Password
+                            </label>
+
+                            <input type="password"
+                                   name="password"
+                                   id="password"
+                                   class="form-control"
+                                   placeholder="Enter password"
+                                   minlength="5"
+                                   required>
+
+                            <div class="invalid-feedback">
+                                Password must contain at least 5 characters.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ========================= -->
+                    <!-- WORKER ONLY FIELDS -->
+                    <!-- ========================= -->
+
+                    <div id="workerFields"
+                         style="display: none;">
+
+                        <div class="border rounded p-3 mb-3"
+                             style="background:#f8faf9;">
+
+                            <h6 class="fw-bold text-success mb-3">
+
+                                <i class="fa-solid fa-user-shield me-2"></i>
+                                Sanitation Worker Details
+
+                            </h6>
+
+
+                            <div class="row g-3">
+
+                                <!-- Worker ID -->
+                                <div class="col-md-6">
+
+                                    <label class="form-label small fw-bold">
+                                        Worker ID
+                                    </label>
+
+                                    <input type="text"
+                                           name="worker_id"
+                                           id="workerId"
+                                           class="form-control"
+                                           placeholder="e.g. WORKER001"
+                                           maxlength="30"
+                                           pattern="[A-Za-z0-9_-]+">
+
+                                    <div class="form-text">
+                                        Example: WORKER001
+                                    </div>
+
+                                    <div class="invalid-feedback">
+                                        Worker ID can contain letters,
+                                        numbers, _ or - only.
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Assigned Area -->
+                                <div class="col-md-6">
+
+                                    <label class="form-label small fw-bold">
+                                        Assigned Area
+                                    </label>
+
+                                    <input type="text"
+                                           name="assigned_area"
+                                           id="assignedArea"
+                                           class="form-control"
+                                           placeholder="e.g. Ward 12">
+
+                                </div>
+
+
+                                <!-- Confirm Password -->
+                                <div class="col-md-6">
+
+                                    <label class="form-label small fw-bold">
+                                        Confirm Password
+                                    </label>
+
+                                    <input type="password"
+                                           name="confirm_password"
+                                           id="confirmPassword"
+                                           class="form-control"
+                                           placeholder="Re-enter password">
+
+                                    <div class="invalid-feedback">
+                                        Passwords do not match.
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Submit -->
+                    <button type="submit"
+                            class="btn btn-eco w-100 py-2">
+
+                        <i class="fa-solid fa-user-check me-2"></i>
+
+                        Complete Registration
+
+                    </button>
+
+                </form>
+
+
+                <!-- Login -->
+                <div class="text-center mt-3">
+
+                    <span class="small text-muted">
+                        Already registered?
+                    </span>
+
+                    <a href="{% url 'login' %}"
+                       class="small fw-bold text-eco-primary text-decoration-none">
+
+                        Sign In
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<script>
+
+function toggleFormFields() {
+
+    const category = document.getElementById("accountCategory").value;
+
+    const workerFields = document.getElementById("workerFields");
+
+    const workerId = document.getElementById("workerId");
+
+    const assignedArea = document.getElementById("assignedArea");
+
+    const confirmPassword = document.getElementById("confirmPassword");
+
+
+    if (category === "worker") {
+
+        workerFields.style.display = "block";
+
+        workerId.required = true;
+        assignedArea.required = true;
+        confirmPassword.required = true;
+
+    } else {
+
+        workerFields.style.display = "none";
+
+        workerId.required = false;
+        assignedArea.required = false;
+        confirmPassword.required = false;
+
+        workerId.value = "";
+        assignedArea.value = "";
+        confirmPassword.value = "";
+
+    }
+
+}
+
+
+/* Password validation */
+
+document.getElementById("registrationForm").addEventListener("submit", function(event) {
+
+    const category = document.getElementById("accountCategory").value;
+
+    const password = document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+
+    if (password.length < 5) {
+
+        event.preventDefault();
+
+        alert("Password must contain at least 5 characters.");
+
+        return;
+
+    }
+
+
+    if (category === "worker") {
+
+        if (password !== confirmPassword) {
+
+            event.preventDefault();
+
+            alert("Password and Confirm Password do not match.");
+
+            return;
+
+        }
+
+    }
+
+});
+
+
+/* Run once when page loads */
+
+toggleFormFields();
+
+</script>
+
+</body>
+</html>

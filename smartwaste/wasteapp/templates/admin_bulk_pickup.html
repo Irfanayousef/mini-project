@@ -1,0 +1,792 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Bulk Pickup Management | Smart Waste
+    </title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f7f5;
+            color: #26352d;
+        }
+
+        .topbar {
+            background: white;
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 15px rgba(0,0,0,.05);
+            margin-bottom: 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: #12372a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .brand h5 {
+            margin: 0;
+            font-weight: 600;
+            color: #12372a;
+        }
+
+        .brand span {
+            display: block;
+            font-size: 11px;
+            color: #7a8780;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #12372a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .admin-role {
+            font-size: 11px;
+            color: #7a8780;
+        }
+
+        .main-content {
+            padding: 0 30px 40px;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .page-title h2 {
+            margin: 0;
+            font-size: 25px;
+            font-weight: 600;
+            color: #12372a;
+        }
+
+        .page-title p {
+            margin: 6px 0 0;
+            font-size: 13px;
+            color: #7a8780;
+        }
+
+        .btn-dashboard {
+            background: #12372a;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .3s;
+        }
+
+        .btn-dashboard:hover {
+            background: #1f6f50;
+            color: white;
+        }
+
+        .summary-card {
+            background: linear-gradient(
+                135deg,
+                #12372a,
+                #1f6f50
+            );
+            color: white;
+            border-radius: 16px;
+            padding: 22px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 8px 25px rgba(18,55,42,.12);
+        }
+
+        .summary-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .summary-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 14px;
+            background: rgba(255,255,255,.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .summary-card h4 {
+            margin: 0;
+            font-size: 27px;
+            font-weight: 700;
+        }
+
+        .summary-card p {
+            margin: 3px 0 0;
+            font-size: 12px;
+            opacity: .8;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.05);
+        }
+
+        .table-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .table-header h5 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .table-header span {
+            font-size: 12px;
+            color: #7a8780;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            background: #f7faf8;
+            color: #68766e;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 14px 12px;
+            border-bottom: 1px solid #e9efeb;
+            white-space: nowrap;
+        }
+
+        .table tbody td {
+            padding: 15px 12px;
+            font-size: 13px;
+            vertical-align: middle;
+            border-bottom: 1px solid #edf1ee;
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table tbody tr:hover {
+            background: #fafcfb;
+        }
+
+        .citizen-name {
+            font-weight: 600;
+            color: #26352d;
+        }
+
+        .property-id {
+            color: #198754;
+            font-weight: 600;
+        }
+
+        .request-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #eef7f1;
+            color: #198754;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #997404;
+        }
+
+        .status-approved {
+            background: #e4f4ea;
+            color: #198754;
+        }
+
+        .status-collected {
+            background: #e8f0ff;
+            color: #356ac3;
+        }
+
+        .status-rejected {
+            background: #ffe6e6;
+            color: #dc3545;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-icon {
+            width: 70px;
+            height: 70px;
+            margin: auto;
+            border-radius: 18px;
+            background: #e4f4ea;
+            color: #198754;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .empty-state h5 {
+            margin-top: 18px;
+            margin-bottom: 7px;
+        }
+
+        .empty-state p {
+            color: #7a8780;
+            font-size: 13px;
+            margin: 0;
+        }
+
+        .bottom-actions {
+            margin-top: 25px;
+        }
+
+        .btn-back {
+            background: white;
+            color: #12372a;
+            border: 1px solid #dfe7e2;
+            padding: 10px 16px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .3s;
+        }
+
+        .btn-back:hover {
+            background: #12372a;
+            color: white;
+            border-color: #12372a;
+        }
+
+        @media (max-width: 768px) {
+
+            .main-content {
+                padding: 0 15px 30px;
+            }
+
+            .topbar {
+                padding: 15px;
+            }
+
+            .admin-name,
+            .admin-role {
+                display: none;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .summary-card {
+                padding: 18px;
+            }
+
+            .table-card {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            <i class="fa-solid fa-recycle"></i>
+        </div>
+
+        <div>
+
+            <h5>
+                Smart Waste
+            </h5>
+
+            <span>
+                Management System
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="admin-profile">
+
+        <div class="admin-avatar">
+            <i class="fa-solid fa-user-shield"></i>
+        </div>
+
+        <div>
+
+            <div class="admin-name">
+                {{ request.user.username }}
+            </div>
+
+            <div class="admin-role">
+                Administrator
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="main-content">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <div class="page-title">
+
+            <h2>
+
+                <i
+                    class="fa-solid fa-truck-ramp-box me-2"
+                    style="color:#198754;">
+                </i>
+
+                Bulk Pickup Management
+
+            </h2>
+
+            <p>
+                Monitor bulk pickup requests submitted by citizens.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <a
+                href="{% url 'admin_dashboard' %}"
+                class="btn-dashboard">
+
+                <i class="fa-solid fa-gauge-high me-2"></i>
+
+                Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary-card">
+
+        <div class="summary-left">
+
+            <div class="summary-icon">
+
+                <i class="fa-solid fa-truck"></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+                    {{ requests|length }}
+                </h4>
+
+                <p>
+                    Total Bulk Pickup Requests
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <i
+            class="fa-solid fa-boxes-stacked"
+            style="
+            font-size:45px;
+            opacity:.15;
+            ">
+        </i>
+
+    </div>
+
+
+    <!-- REQUEST TABLE -->
+
+    <div class="table-card">
+
+
+        <div class="table-header">
+
+            <h5>
+
+                <i
+                    class="fa-solid fa-list-check me-2"
+                    style="color:#198754;">
+                </i>
+
+                Bulk Pickup Requests
+
+            </h5>
+
+
+            <span>
+                {{ requests|length }} requests
+            </span>
+
+        </div>
+
+
+        {% if requests %}
+
+
+        <div class="table-responsive">
+
+            <table class="table align-middle">
+
+                <thead>
+
+                    <tr>
+
+                        <th>CITIZEN</th>
+
+                        <th>PROPERTY ID</th>
+
+                        <th>BULK TYPE</th>
+
+                        <th>DESCRIPTION</th>
+
+                        <th>PREFERRED DATE</th>
+
+                        <th>STATUS</th>
+
+                        <th>REQUESTED</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for pickup in requests %}
+
+                    <tr>
+
+
+                        <!-- CITIZEN -->
+
+                        <td>
+
+                            <div class="citizen-name">
+
+                                {{ pickup.citizen.get_full_name|default:pickup.citizen.username }}
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- PROPERTY -->
+
+                        <td>
+
+                            <span class="property-id">
+
+                                {{ pickup.property.property_id }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- BULK TYPE -->
+
+                        <td>
+
+                            <span class="request-type">
+
+                                <i class="fa-solid fa-box"></i>
+
+                                {{ pickup.get_bulk_type_display }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <td>
+
+                            {% if pickup.description %}
+
+                                {{ pickup.description|truncatechars:45 }}
+
+                            {% else %}
+
+                                <span style="color:#9aa59f;">
+                                    No description
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- PREFERRED DATE -->
+
+                        <td>
+
+                            {{ pickup.preferred_date|date:"d M Y" }}
+
+                        </td>
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            {% if pickup.status == 'PENDING' %}
+
+                                <span class="status-badge status-pending">
+
+                                    <i class="fa-solid fa-clock"></i>
+
+                                    Pending
+
+                                </span>
+
+                            {% elif pickup.status == 'APPROVED' %}
+
+                                <span class="status-badge status-approved">
+
+                                    <i class="fa-solid fa-check"></i>
+
+                                    Approved
+
+                                </span>
+
+                            {% elif pickup.status == 'COLLECTED' %}
+
+                                <span class="status-badge status-collected">
+
+                                    <i class="fa-solid fa-truck"></i>
+
+                                    Collected
+
+                                </span>
+
+                            {% elif pickup.status == 'REJECTED' %}
+
+                                <span class="status-badge status-rejected">
+
+                                    <i class="fa-solid fa-xmark"></i>
+
+                                    Rejected
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="status-badge status-pending">
+
+                                    {{ pickup.status }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- REQUESTED DATE -->
+
+                        <td>
+
+                            {{ pickup.created_at|date:"d M Y, h:i A" }}
+
+                        </td>
+
+
+                    </tr>
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- EMPTY STATE -->
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-truck-ramp-box"></i>
+
+            </div>
+
+
+            <h5>
+                No Bulk Pickup Requests
+            </h5>
+
+
+            <p>
+                There are currently no bulk pickup requests
+                in the system.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- BACK -->
+
+    <div class="bottom-actions">
+
+        <a
+            href="{% url 'admin_dashboard' %}"
+            class="btn-back">
+
+            <i class="fa-solid fa-arrow-left me-2"></i>
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Bulk Pickup | SmartWaste</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        rel="stylesheet">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7f6;
+            font-family: 'Poppins', sans-serif;
+            color: #263238;
+        }
+
+        /* =========================================
+           SIDEBAR
+        ========================================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 238px;
+            height: 100vh;
+            background: #12372a;
+            color: white;
+            padding: 28px 0;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .brand {
+            padding: 0 25px 35px;
+        }
+
+        .brand h3 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .brand small {
+            color: #9fd3bc;
+            font-size: 10px;
+        }
+
+        .section-title {
+            color: #8eb8a7;
+            font-size: 11px;
+            letter-spacing: 1px;
+            padding: 0 20px;
+            margin: 10px 0;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 14px 22px;
+            color: #e6f2ed;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .sidebar a i {
+            width: 20px;
+        }
+
+        /* =========================================
+           MAIN
+        ========================================= */
+
+        .main {
+            margin-left: 238px;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           TOPBAR
+        ========================================= */
+
+        .topbar {
+            height: 76px;
+            background: white;
+            border-bottom: 1px solid #e3e8e5;
+            padding: 16px 35px;
+        }
+
+        .topbar h2 {
+            font-size: 22px;
+            margin: 0;
+            font-weight: 700;
+            color: #12372a;
+        }
+
+        .topbar p {
+            margin: 2px 0 0;
+            color: #78909c;
+            font-size: 13px;
+        }
+
+        /* =========================================
+           CONTENT
+        ========================================= */
+
+        .content {
+            padding: 32px;
+        }
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            min-height: 230px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(18,55,42,0.97),
+                    rgba(46,125,50,0.76)
+                ),
+                url("https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=1400&q=80");
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            align-items: center;
+
+            padding: 42px;
+
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #e7f3ed;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* =========================================
+           STATS
+        ========================================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-top: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 18px;
+            padding: 22px;
+            border: 1px solid #e6ece8;
+            box-shadow: 0 5px 20px rgba(18,55,42,0.05);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #e8f5e9;
+            color: #2e7d32;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 13px;
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            font-size: 25px;
+            font-weight: 700;
+            color: #12372a;
+        }
+
+        .stat-card p {
+            margin: 4px 0 0;
+            color: #78909c;
+            font-size: 12px;
+        }
+
+        /* =========================================
+           REQUEST CARD
+        ========================================= */
+
+        .request-card {
+            background: white;
+            border-radius: 20px;
+            margin-top: 25px;
+            border: 1px solid #e6ece8;
+            box-shadow: 0 5px 25px rgba(18,55,42,0.06);
+            overflow: hidden;
+        }
+
+        .request-header {
+            padding: 24px 26px;
+            border-bottom: 1px solid #e8eeea;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .request-header h5 {
+            margin: 0;
+            font-weight: 700;
+            color: #12372a;
+        }
+
+        .request-header p {
+            margin: 4px 0 0;
+            font-size: 12px;
+            color: #78909c;
+        }
+
+        /* =========================================
+           TABLE
+        ========================================= */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .table {
+            margin: 0;
+            min-width: 1050px;
+        }
+
+        .table thead th {
+            background: #f7faf8;
+            color: #607d70;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 15px 16px;
+            border-bottom: 1px solid #e5ebe7;
+            white-space: nowrap;
+        }
+
+        .table tbody td {
+            padding: 17px 16px;
+            vertical-align: middle;
+            font-size: 13px;
+            border-bottom: 1px solid #edf1ee;
+        }
+
+        .property-id {
+            color: #2e7d32;
+            font-weight: 700;
+        }
+
+        .owner-name {
+            font-weight: 600;
+            color: #263238;
+        }
+
+        .bulk-type {
+            font-weight: 600;
+        }
+
+        .description {
+            max-width: 220px;
+            color: #78909c;
+            font-size: 12px;
+        }
+
+        /* =========================================
+           STATUS
+        ========================================= */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 11px;
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff8e1;
+            color: #f57f17;
+        }
+
+        .status-approved {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-collected {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-rejected {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* =========================================
+           ACTIONS
+        ========================================= */
+
+        .action-buttons {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .btn-approve {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .btn-approve:hover {
+            background: #2e7d32;
+            color: white;
+        }
+
+        .btn-reject {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .btn-reject:hover {
+            background: #c62828;
+            color: white;
+        }
+
+        .btn-complete {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .btn-complete:hover {
+            background: #1565c0;
+            color: white;
+        }
+
+        /* =========================================
+           EMPTY
+        ========================================= */
+
+        .empty-state {
+            text-align: center;
+            padding: 70px 20px;
+        }
+
+        .empty-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            background: #e8f5e9;
+            color: #2e7d32;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 18px;
+
+            font-size: 28px;
+        }
+
+        .empty-state h5 {
+            color: #12372a;
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            color: #78909c;
+            font-size: 13px;
+        }
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                width: 200px;
+            }
+
+            .main {
+                margin-left: 200px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 28px;
+            }
+
+            .hero h1 {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <h3>
+            <i class="fa-solid fa-recycle me-2"></i>
+            SmartWaste
+        </h3>
+
+        <small>
+            RESOURCE MANAGEMENT
+        </small>
+
+    </div>
+
+
+    <div class="section-title">
+        WORKSPACE
+    </div>
+
+
+    <a href="{% url 'worker_dashboard' %}">
+        <i class="fa-solid fa-table-columns"></i>
+        Dashboard
+    </a>
+
+
+    <a href="{% url 'my_collection_areas' %}">
+        <i class="fa-solid fa-location-dot"></i>
+        My Collection Areas
+    </a>
+
+
+    <a href="{% url 'verify_property' %}">
+        <i class="fa-solid fa-qrcode"></i>
+        Verify Property
+    </a>
+
+
+    <a href="{% url 'verify_property' %}">
+        <i class="fa-solid fa-trash-can"></i>
+        Record Collection
+    </a>
+
+
+    <a href="{% url 'worker_bulk_pickup' %}"
+       class="active">
+
+        <i class="fa-solid fa-box"></i>
+
+        Bulk Pickup
+
+    </a>
+
+
+      <a href="{% url 'collection_history' %}">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+         Collection History
+      </a>
+
+
+    <div class="section-title mt-4">
+        REPORTS
+    </div>
+
+
+    <a href="#">
+
+        <i class="fa-regular fa-pen-to-square"></i>
+
+        Daily Work Update
+
+    </a>
+
+
+    <a href="#">
+
+        <i class="fa-solid fa-bell"></i>
+
+        Notifications
+
+    </a>
+
+
+    <a href="{% url 'logout' %}"
+       class="mt-3">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        Logout
+
+    </a>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <h2>
+            Bulk Pickup
+        </h2>
+
+        <p>
+            Manage citizen bulk waste pickup requests
+        </p>
+
+    </header>
+
+
+    <div class="content">
+
+
+        <!-- =================================================
+             HERO
+        ================================================= -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+
+                    <i class="fa-solid fa-box me-1"></i>
+
+                    Worker Bulk Pickup Management
+
+                </div>
+
+
+                <h1>
+                    Bulk Pickup Requests
+                </h1>
+
+
+                <p>
+
+                    Review citizen requests for furniture,
+                    electronics, appliances, construction waste
+                    and other bulky materials. Approve, reject,
+                    and complete pickup requests from one place.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             STATS
+        ================================================= -->
+
+        <div class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-list"></i>
+
+                </div>
+
+                <h3>
+                    {{ bulk_requests|length }}
+                </h3>
+
+                <p>
+                    Total Requests
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-hourglass-half"></i>
+
+                </div>
+
+                <h3>
+
+                    {% with pending_count=0 %}
+
+                        {% for request in bulk_requests %}
+
+                            {% if request.status == 'PENDING' %}
+                                {% with pending_count=pending_count|add:"1" %}
+                                {% endwith %}
+                            {% endif %}
+
+                        {% endfor %}
+
+                    {% endwith %}
+
+                    {{ bulk_requests|length }}
+
+                </h3>
+
+                <p>
+                    Requests Received
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+                <h3>
+                    {{ bulk_requests|length }}
+                </h3>
+
+                <p>
+                    Pickup Requests
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="fa-solid fa-truck"></i>
+
+                </div>
+
+                <h3>
+                    {{ bulk_requests|length }}
+                </h3>
+
+                <p>
+                    Total Records
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             REQUEST TABLE
+        ================================================= -->
+
+        <section class="request-card">
+
+
+            <div class="request-header">
+
+                <div>
+
+                    <h5>
+
+                        <i class="fa-solid fa-box-open me-2"
+                           style="color:#2e7d32;">
+                        </i>
+
+                        Pickup Requests
+
+                    </h5>
+
+                    <p>
+                        Review and manage citizen bulk pickup requests
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if messages %}
+
+                <div class="px-4 pt-3">
+
+                    {% for message in messages %}
+
+                        <div class="alert alert-{{ message.tags }}">
+
+                            <i class="fa-solid fa-circle-info me-2"></i>
+
+                            {{ message }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            {% if bulk_requests %}
+
+                <div class="table-wrapper">
+
+                    <table class="table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Property
+                                </th>
+
+                                <th>
+                                    Owner
+                                </th>
+
+                                <th>
+                                    Bulk Type
+                                </th>
+
+                                <th>
+                                    Description
+                                </th>
+
+                                <th>
+                                    Preferred Date
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for request in bulk_requests %}
+
+                                <tr>
+
+
+                                    <!-- PROPERTY -->
+
+                                    <td>
+
+                                        <span class="property-id">
+
+                                            {{ request.property.property_id }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- OWNER -->
+
+                                    <td>
+
+                                        <span class="owner-name">
+
+                                            {{ request.property.owner_name }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- BULK TYPE -->
+
+                                    <td>
+
+                                        <span class="bulk-type">
+
+                                            {{ request.bulk_type }}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- DESCRIPTION -->
+
+                                    <td>
+
+                                        <div class="description">
+
+                                            {{ request.description|default:"No description provided" }}
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- DATE -->
+
+                                    <td>
+
+                                        {{ request.preferred_date|date:"d M Y" }}
+
+                                    </td>
+
+
+                                    <!-- STATUS -->
+
+                                    <td>
+
+                                        {% if request.status == 'PENDING' %}
+
+                                            <span class="status status-pending">
+
+                                                <i class="fa-solid fa-clock"></i>
+
+                                                Pending
+
+                                            </span>
+
+                                        {% elif request.status == 'APPROVED' %}
+
+                                            <span class="status status-approved">
+
+                                                <i class="fa-solid fa-check"></i>
+
+                                                Approved
+
+                                            </span>
+
+                                        {% elif request.status == 'COLLECTED' %}
+
+                                            <span class="status status-collected">
+
+                                                <i class="fa-solid fa-circle-check"></i>
+
+                                                Collected
+
+                                            </span>
+
+                                        {% elif request.status == 'REJECTED' %}
+
+                                            <span class="status status-rejected">
+
+                                                <i class="fa-solid fa-xmark"></i>
+
+                                                Rejected
+
+                                            </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+
+                                    <!-- ACTIONS -->
+
+                                    <td>
+
+                                        <div class="action-buttons">
+
+
+                                            {% if request.status == 'PENDING' %}
+
+                                                <form
+                                                    method="POST"
+                                                    action="{% url 'approve_bulk_pickup' request.id %}"
+                                                >
+
+                                                    {% csrf_token %}
+
+                                                    <button
+                                                        type="submit"
+                                                        class="action-btn btn-approve"
+                                                    >
+
+                                                        <i class="fa-solid fa-check me-1"></i>
+
+                                                        Approve
+
+                                                    </button>
+
+                                                </form>
+
+
+                                                <form
+                                                    method="POST"
+                                                    action="{% url 'reject_bulk_pickup' request.id %}"
+                                                >
+
+                                                    {% csrf_token %}
+
+                                                    <button
+                                                        type="submit"
+                                                        class="action-btn btn-reject"
+                                                    >
+
+                                                        <i class="fa-solid fa-xmark me-1"></i>
+
+                                                        Reject
+
+                                                    </button>
+
+                                                </form>
+
+
+                                            {% elif request.status == 'APPROVED' %}
+
+                                                <form
+                                                    method="POST"
+                                                    action="{% url 'complete_bulk_pickup' request.id %}"
+                                                >
+
+                                                    {% csrf_token %}
+
+                                                    <button
+                                                        type="submit"
+                                                        class="action-btn btn-complete"
+                                                    >
+
+                                                        <i class="fa-solid fa-truck me-1"></i>
+
+                                                        Mark Collected
+
+                                                    </button>
+
+                                                </form>
+
+
+                                            {% elif request.status == 'COLLECTED' %}
+
+                                                <span class="text-success small">
+
+                                                    <i class="fa-solid fa-circle-check me-1"></i>
+
+                                                    Completed
+
+                                                </span>
+
+
+                                            {% elif request.status == 'REJECTED' %}
+
+                                                <span class="text-danger small">
+
+                                                    <i class="fa-solid fa-circle-xmark me-1"></i>
+
+                                                    Rejected
+
+                                                </span>
+
+                                            {% endif %}
+
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+
+                        <i class="fa-solid fa-box-open"></i>
+
+                    </div>
+
+                    <h5>
+                        No Bulk Pickup Requests
+                    </h5>
+
+                    <p>
+                        There are currently no bulk pickup requests
+                        submitted by citizens.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+</body>
+
+</html>
